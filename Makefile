@@ -6,11 +6,12 @@
 #    By: walidnaiji <walidnaiji@student.42.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/11 11:42:09 by wnaiji            #+#    #+#              #
-#    Updated: 2023/08/21 15:08:54 by walidnaiji       ###   ########.fr        #
+#    Updated: 2023/08/29 14:49:22 by walidnaiji       ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRC =
+SRC =	ft_list.c \
+		main.c
 
 OBJ_DIR = obj
 OBJS = $(addprefix $(OBJ_DIR)/,$(SRC:.c=.o))

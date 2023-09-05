@@ -6,35 +6,35 @@
 /*   By: walidnaiji <walidnaiji@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 11:20:30 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/06/07 20:50:37 by walidnaiji       ###   ########.fr       */
+/*   Updated: 2023/08/29 14:57:34 by walidnaiji       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "minishell.h"
 
-void	*ft_add_front_list(t_list *list, char *line)
+void	*ft_add_front_list(t_lexer *list, char *line)
 {
-	t_list	*newline;
+	t_lexer	*newline;
 
-	newline = malloc(sizeof(t_list));
+	newline = malloc(sizeof(t_lexer));
 	if (!newline)
 		return (NULL);
-	newline->line = line;
+	newline->cmd = line;
 	newline->prev = NULL;
 	newline->next = list;
 	return (newline);
 }
 
-void	*ft_add_back_list(t_list *list, char *line)
+void	*ft_add_back_list(t_lexer *list, char *line)
 {
-	t_list	*newline;
-	t_list	*tmp;
+	t_lexer	*newline;
+	t_lexer	*tmp;
 
 	tmp = list;
-	newline = malloc(sizeof(t_list));
+	newline = malloc(sizeof(t_lexer));
 	if (!newline)
 		return (NULL);
-	newline->line = line;
+	newline->cmd = line;
 	newline->prev = NULL;
 	newline->next = NULL;
 	if (!list)
@@ -49,9 +49,9 @@ void	*ft_add_back_list(t_list *list, char *line)
 	}
 }
 
-void	*ft_delete_in_head(t_list *list)
+void	*ft_delete_in_head(t_lexer *list)
 {
-	t_list	*nxt;
+	t_lexer	*nxt;
 
 	if (!list)
 		return (NULL);
@@ -60,10 +60,10 @@ void	*ft_delete_in_head(t_list *list)
 	return (nxt);
 }
 
-void	*ft_delete_at_back(t_list *list)
+void	*ft_delete_at_back(t_lexer *list)
 {
-	t_list	*tmp;
-	t_list	*tmp2;
+	t_lexer	*tmp;
+	t_lexer	*tmp2;
 
 	tmp = list;
 	tmp2 = list;
@@ -84,14 +84,14 @@ void	*ft_delete_at_back(t_list *list)
 	return (list);
 }
 
-char	*ft_last_content(t_list *list)
+char	*ft_last_content(t_lexer *list)
 {
-	t_list	*tmp;
+	t_lexer	*tmp;
 
 	tmp = list;
 	if (!list)
 		return (NULL);
 	while (tmp->next)
 		tmp = tmp->next;
-	return (tmp->line);
+	return (tmp->cmd);
 }
