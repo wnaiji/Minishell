@@ -6,7 +6,7 @@
 /*   By: walidnaiji <walidnaiji@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 11:20:30 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/08/29 14:57:34 by walidnaiji       ###   ########.fr       */
+/*   Updated: 2023/09/12 19:22:44 by walidnaiji       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	*ft_add_front_list(t_lexer *list, char *line)
 	newline = malloc(sizeof(t_lexer));
 	if (!newline)
 		return (NULL);
-	newline->cmd = line;
+	newline->str = line;
 	newline->prev = NULL;
 	newline->next = list;
 	return (newline);
@@ -34,7 +34,7 @@ void	*ft_add_back_list(t_lexer *list, char *line)
 	newline = malloc(sizeof(t_lexer));
 	if (!newline)
 		return (NULL);
-	newline->cmd = line;
+	newline->str = line;
 	newline->prev = NULL;
 	newline->next = NULL;
 	if (!list)
@@ -93,5 +93,5 @@ char	*ft_last_content(t_lexer *list)
 		return (NULL);
 	while (tmp->next)
 		tmp = tmp->next;
-	return (tmp->cmd);
+	return (tmp->str);
 }

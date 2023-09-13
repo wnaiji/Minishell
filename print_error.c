@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.h                                          :+:      :+:    :+:   */
+/*   print_error.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: walidnaiji <walidnaiji@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/17 14:55:25 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/08/17 15:11:34 by walidnaiji       ###   ########.fr       */
+/*   Created: 2023/09/13 10:35:15 by wnaiji            #+#    #+#             */
+/*   Updated: 2023/09/13 10:41:41 by walidnaiji       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSING_H
-# define PARSING_H
+#include "parsing.h"
 
-
-
-#endif
+void	error_syntax(char *str)
+{
+	printf("minishell: syntax error near unexpected token `%s'\n", str);
+}
