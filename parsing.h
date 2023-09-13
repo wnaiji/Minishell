@@ -6,7 +6,7 @@
 /*   By: walidnaiji <walidnaiji@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 14:55:25 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/09/13 13:58:33 by walidnaiji       ###   ########.fr       */
+/*   Updated: 2023/09/13 15:27:28 by walidnaiji       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ typedef enum
 typedef struct	s_lexer
 {
 	char			*str;
-	t_tokens		token;
+	t_operator		operator;
 	int				index;
 	t_quoted		quoted;
 	struct s_lexer	*next;
@@ -58,13 +58,16 @@ void	basic_parsing(char *input);
 
 //////////LEXER//////////
 //outils_lexer.c
+t_operator	token_operator(char *str, int *i);
 char	*chardup(char c);
 char	*charjoin(char *str, char c);
 int	special_char(char c);
 //lexer.c
 t_lexer	*simple_quote(t_lexer *lexer, char *input, int *i);
-t_lexer	*double_quote(t_leser *lexer, char *input, int *i);
+t_lexer	*double_quote(t_lexer *lexer, char *input, int *i);
 t_lexer	*no_quote(t_lexer *lexer, char *input, int *i);
+t_lexer	*operator(t_lexer *lexer, char *input, int *i);
+void	init_lexer(char *input);
 
 //////////PRINT_ERROR//////////
 //print_error.c

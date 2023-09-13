@@ -6,12 +6,14 @@
 #    By: walidnaiji <walidnaiji@student.42.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/11 11:42:09 by wnaiji            #+#    #+#              #
-#    Updated: 2023/09/12 23:44:27 by walidnaiji       ###   ########.fr        #
+#    Updated: 2023/09/13 14:42:52 by walidnaiji       ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRC =	basic_parsing.c \
 		ft_list.c \
+		outils_lexer.c \
+		print_error.c \
 		main.c
 
 OBJ_DIR = obj
@@ -19,7 +21,7 @@ OBJS = $(addprefix $(OBJ_DIR)/,$(SRC:.c=.o))
 
 NAME = minishell
 
-CFLAGS = -Werror -Wextra -Wall #-fsanitize=address -g3
+CFLAGS = -Werror -Wextra -Wall -fsanitize=address -g3
 SUCCESS_MSG = "\033[0;32mCompilation successful. $(NAME) created.\033[0m\n"
 ERROR_MSG = "\033[0;31mCompilation failed.\033[0m\n"
 LIBFT_PATH = ./Libft/

@@ -6,13 +6,34 @@
 /*   By: walidnaiji <walidnaiji@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 11:07:25 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/09/13 13:59:51 by walidnaiji       ###   ########.fr       */
+/*   Updated: 2023/09/13 15:34:25 by walidnaiji       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
-t_operator	
+t_operator	token_operator(char *str, int *i)
+{
+	if (str[0] == '|')
+		return (PIPE);
+	else if (str[0] == '<' && str[1] == '<')
+	{
+		(*i)++;
+		return (HEREDOC);
+	}
+	else if (str[0] == '<')
+		return (INFILE);
+	else if (str[0] == '>' && str[1] == '>')
+	{
+		(*i)++;
+		return (OUTFILE_AP_MOD);
+	}
+	else if (str[0] == ' ')
+		return (SPACE);
+	else
+		return (OUTFILE);
+}
+
 char	*chardup(char c)
 {
 	char	*str;
