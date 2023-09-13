@@ -6,7 +6,7 @@
 /*   By: walidnaiji <walidnaiji@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 14:58:41 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/09/13 15:45:15 by walidnaiji       ###   ########.fr       */
+/*   Updated: 2023/09/13 17:16:34 by walidnaiji       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,8 @@ t_lexer	*no_quote(t_lexer *lexer, char *input, int *i)
 			(*i)++;
 		}
 	}
+	if (input[*i] == DOUBLE_QUOTE || input[*i] == SIMPLE_QUOTE)
+		(*i)--;
 	lexer->quoted = NO_QUOTED;
 	return (lexer);
 }

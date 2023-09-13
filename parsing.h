@@ -6,7 +6,7 @@
 /*   By: walidnaiji <walidnaiji@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 14:55:25 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/09/13 15:27:28 by walidnaiji       ###   ########.fr       */
+/*   Updated: 2023/09/13 17:03:10 by walidnaiji       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ typedef struct	s_lexer
 //////////BASIC_PARSING///////////
 //basic_parsing.c
 void	basic_parsing(char *input);
-
 //////////LEXER//////////
 //outils_lexer.c
 t_operator	token_operator(char *str, int *i);
