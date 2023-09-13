@@ -6,98 +6,163 @@
 /*   By: walidnaiji <walidnaiji@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 14:58:41 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/08/29 15:36:22 by walidnaiji       ###   ########.fr       */
+/*   Updated: 2023/09/13 15:45:15 by walidnaiji       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// retourne la redirection ou autre
-t_tokens	token_for_lexer(char *input, int len)
+//----------------------- visualisation du lexer
+
+void	print_lexer(t_lexer *lexer)
 {
-	if (ft_strchr(input, INFILE) != NULL)
-		return (I_FILE);
-	else if (ft_strchr(input, OUTFILE) != NULL)
-		return (O_FILE);
-	else if (ft_strchr(input, HEREDOC) != NULL)
-		return (H_DOC);
-	else if (ft_strchr(input, OUT_AP_MO) != NULL)
-		return (A_MODE);
-	else if (ft_strchr(input, PIPE) != NULL)
-		return (PIPE_);
+	t_lexer	*tmp;
+	while (lexer->prev)
+		lexer = lexer->prev;
+	tmp = lexer;
+	while (tmp)
+	{
+		printf("%s\n", tmp->str);
+		tmp = tmp->next;
+	}
 }
 
-// Initialisation de chaque maillon
-t_list	init_lexer(char *input, t_list *lexer, int start, int len)
-{
-	static int	index;
-	char		*cmd;
+//----------------------- lexer
 
-	index = 1;
-	cmd = NULL;
-	if (start != len)
-		cmd = ft_substr(input, start, len);
-	if (!lexer)
+t_lexer	*simple_quote(t_lexer *lexer, char *input, int *i)
+{
+	(*i)++;
+	if (lexer->str)
+		lexer = ft_add_back_list(lexer, NULL);
+	if (lexer->next)
+		lexer = lexer->next;
+	while (input[*i] != SIMPLE_QUOTE)
 	{
-		ft_add_front_list(lexer, cmd);
-		lexer->tonken = token_for_lexer(input, len);
-		lexer->index = index;
+		if (!lexer->str)
+			lexer->str = chardup(input[*i]);
+		else
+			lexer->str = charjoin(lexer->str, input[*i]);
+		(*i)++;
 	}
-	else
-	{
-		ft_add_back_list(lexer, cmd);
-		lexer->tonken = token_for_lexer(input, len);
-		lexer->index = index;
-	}
-	index++;
-	if (cmd)
-		free(cmd);
+	lexer->quoted = SIMPLE_QUOTED;
+	return (lexer);
 }
 
-// Parsing de l'input, création d'un maillon à chaque fois
-// que le caractère est autre q'un alphanum
-char	*basic_parsing(char *input, t_list *lexer)
+t_lexer	*double_quote(t_lexer *lexer, char *input, int *i)
 {
-	int	i;
-	int start;
-
-	i = 0;
-	start = 0;
-	while (input[i++])
+	(*i)++;
+	if (lexer->str)
+		lexer = ft_add_back_list(lexer, NULL);
+	if (lexer->next)
+		lexer = lexer->next;
+	while (input[*i] != DOUBLE_QUOTE)
 	{
-		if (!ft_isalnum(input[i]))
+		if (!lexer->str)
+			lexer->str = chardup(input[*i]);
+		else
+			lexer->str = charjoin(lexer->str, input[*i]);
+		(*i)++;
+	}
+	lexer->quoted = DOUBLE_QUOTED;
+	return (lexer);
+}
+
+t_lexer	*no_quote(t_lexer *lexer, char *input, int *i)
+{
+	if (lexer->str)
+		lexer = ft_add_back_list(lexer, NULL);
+	if (lexer->next)
+		lexer = lexer->next;
+	while (input[*i])
+	{
+		if (special_char(input[*i]) != 0)
+			break ;
+		else
 		{
-			while ((!ft_isalnum(input[i])) && input[i])
-				i++;
-			init_lexer(input, lexer, start, i);
-			start = i + 1;
+			if (!lexer->str)
+				lexer->str = chardup(input[*i]);
+			else
+				lexer->str = charjoin(lexer->str, input[*i]);
+			(*i)++;
 		}
 	}
-	init_lexer(input, lexer, start, i);
+	lexer->quoted = NO_QUOTED;
+	return (lexer);
 }
 
-// Utilisation de readline, elle retourne NULL si ctrl D est utilisé
+t_lexer	*operator(t_lexer *lexer, char *input, int *i)
+{
+	if (lexer->str)
+		lexer = ft_add_back_list(lexer, NULL);
+	if (lexer->next)
+		lexer = lexer->next;
+	lexer->str = chardup(input[*i]);
+	if ((input[*i] == '<' && input[*i + 1] == '<')
+		|| (input[*i] == '>' && input[*i + 1] == '>'))
+		lexer->str = charjoin(lexer->str, input[*i]);
+	return (lexer);
+}
+
+void	init_lexer(char *input)
+{
+	int		i;
+	t_lexer	*lexer;
+
+	i = 0;
+	lexer = NULL;
+	while (input[i])
+	{
+		lexer = ft_add_back_list(lexer, NULL);
+		if (lexer->next)
+			lexer = lexer->next;
+		if (input[i] == SIMPLE_QUOTE)
+			lexer = simple_quote(lexer, input, &i);
+		else if (input[i] == DOUBLE_QUOTE)
+			lexer = double_quote(lexer, input, &i);
+		else
+		{
+			lexer = no_quote(lexer, input, &i);
+			if (input[i])
+			{
+				lexer = operator(lexer, input, &i);
+				lexer->operator = token_operator(lexer->str, &i);
+			}
+		}
+		i++;
+	}
+	print_lexer(lexer);
+}
+
+//----------------------- prompt
+
 char	*prompt(char *input)
 {
-	input = readline("minishell> ");
+	input = readline("minishell > ");
 	if (!input)
 	{
 		printf("exit\n");
-		exit(EXIT_SUCESS);
+		exit(EXIT_SUCCESS);
 	}
+	if (input[0] != '\0')
+		add_history(input);
 	return (input);
 }
+
+//----------------------- main
 
 int	main(int argc, char **argv, char **envp)
 {
 	char	*input;
-	t_list	*lexer;
-
+	(void)argv;
+	(void)envp;
 	while (argc == 1)
 	{
 		input = prompt(input);
+		basic_parsing(input);
+		init_lexer(input);
+		//penser a free input
 	}
-	else
+	if (argc > 1)
 		printf("Error: do not give an argument to the executable\n");
 	return (0);
 }
