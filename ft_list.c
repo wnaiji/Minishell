@@ -6,17 +6,17 @@
 /*   By: walidnaiji <walidnaiji@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 11:20:30 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/09/12 19:22:44 by walidnaiji       ###   ########.fr       */
+/*   Updated: 2023/09/13 19:48:11 by walidnaiji       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	*ft_add_front_list(t_lexer *list, char *line)
+void	*ft_add_front_list(t_parser *list, char *line)
 {
-	t_lexer	*newline;
+	t_parser	*newline;
 
-	newline = malloc(sizeof(t_lexer));
+	newline = malloc(sizeof(t_parser));
 	if (!newline)
 		return (NULL);
 	newline->str = line;

@@ -6,13 +6,13 @@
 /*   By: walidnaiji <walidnaiji@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 14:54:56 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/09/13 10:44:36 by walidnaiji       ###   ########.fr       */
+/*   Updated: 2023/09/13 17:23:24 by walidnaiji       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
-static int	check_simple_quote(char *str, int *i)
+int	check_simple_quote(char *str, int *i)
 {
 	while (1)
 	{
@@ -27,7 +27,7 @@ static int	check_simple_quote(char *str, int *i)
 	}
 }
 
-static int	check_double_quote(char *str, int *i)
+int	check_double_quote(char *str, int *i)
 {
 	while (1)
 	{
