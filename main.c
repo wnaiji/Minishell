@@ -6,7 +6,7 @@
 /*   By: walidnaiji <walidnaiji@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 14:58:41 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/09/13 19:59:50 by walidnaiji       ###   ########.fr       */
+/*   Updated: 2023/09/14 10:14:17 by walidnaiji       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,19 @@ void	print_lexer(t_lexer *lexer)
 	tmp = lexer;
 	while (tmp)
 	{
-		printf("%s\n", tmp->str);
+		printf("#####LEXER#####\n");
+		printf("CONTENT: %s\n", tmp->str);
+		printf("OPERATOR: %d\n", tmp->operator);
+		printf("QUOTED: %d\n", tmp->quoted);
 		tmp = tmp->next;
 	}
 }
 
 //----------------------- Parser
-t_lexer	*first_parsing(t_lexer *lexer)
+
+//Commencer Par trim les maillons qui sont NO_QUOTED
+//Puis supprimer les maillons NULL
+/*t_lexer	*first_parsing(t_lexer *lexer)
 {
 	while (ft_strncmp(ft_last_content(lexer), " ", 2) == 0)
 		ft_delete_at_back(lexer);
@@ -37,12 +43,14 @@ t_lexer	*first_parsing(t_lexer *lexer)
 	while (ft_strncmp(lexer->str, " ", 2) == 0)
 		ft_delete_in_head(lexer);
 	//vérifier les espaces au milieu
-}
+}*/
 
-void	init_parser(t_lexer *lexer)
+//trim les string NO_QUOTED
+
+/*void	init_parser(t_lexer *lexer)
 {
 
-}
+}*/
 
 //----------------------- prompt
 

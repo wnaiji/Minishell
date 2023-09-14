@@ -6,14 +6,27 @@
 /*   By: walidnaiji <walidnaiji@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 11:07:25 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/09/13 15:34:25 by walidnaiji       ###   ########.fr       */
+/*   Updated: 2023/09/14 14:44:23 by walidnaiji       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
+t_lexer	*check_space(t_lexer *lexer, char *input, int *i)
+{
+	while (input[*i] && (input[*i] == ' ' || input[*i] == '\t'))
+		(*i)++;
+	if (input[*i] == DOUBLE_QUOTE)
+		lexer = double_quote(lexer, input, &(*i));
+	else if (input[*i] == SIMPLE_QUOTE)
+		lexer = simple_quote(lexer, input, &(*i));
+	return (lexer);
+}
+
 t_operator	token_operator(char *str, int *i)
 {
+	if (!str)
+		return (99);
 	if (str[0] == '|')
 		return (PIPE);
 	else if (str[0] == '<' && str[1] == '<')
