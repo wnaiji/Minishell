@@ -6,41 +6,29 @@
 /*   By: walidnaiji <walidnaiji@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 11:07:25 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/09/14 14:44:23 by walidnaiji       ###   ########.fr       */
+/*   Updated: 2023/09/14 21:20:25 by walidnaiji       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
-t_lexer	*check_space(t_lexer *lexer, char *input, int *i)
+int	forward_in_space(char *input, int *i)
 {
-	while (input[*i] && (input[*i] == ' ' || input[*i] == '\t'))
+	while (input[*i] && input[*i] == ' ')
 		(*i)++;
-	if (input[*i] == DOUBLE_QUOTE)
-		lexer = double_quote(lexer, input, &(*i));
-	else if (input[*i] == SIMPLE_QUOTE)
-		lexer = simple_quote(lexer, input, &(*i));
-	return (lexer);
+	return (*i);
 }
 
-t_operator	token_operator(char *str, int *i)
+t_operator	token_operator(char *str)
 {
-	if (!str)
-		return (99);
 	if (str[0] == '|')
 		return (PIPE);
 	else if (str[0] == '<' && str[1] == '<')
-	{
-		(*i)++;
 		return (HEREDOC);
-	}
 	else if (str[0] == '<')
 		return (INFILE);
 	else if (str[0] == '>' && str[1] == '>')
-	{
-		(*i)++;
 		return (OUTFILE_AP_MOD);
-	}
 	else if (str[0] == ' ')
 		return (SPACE);
 	else
@@ -81,8 +69,7 @@ char	*charjoin(char *str, char c)
 
 int	special_char(char c)
 {
-	if (c == '>' || c == '<' || c == PIPELINE || c == SIMPLE_QUOTE
-		|| c == DOUBLE_QUOTE)
+	if (c == '>' || c == '<' || c == PIPELINE)
 		return (c);
 	else
 		return (0);

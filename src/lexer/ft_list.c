@@ -6,11 +6,11 @@
 /*   By: walidnaiji <walidnaiji@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 11:20:30 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/09/13 19:48:11 by walidnaiji       ###   ########.fr       */
+/*   Updated: 2023/09/14 22:16:51 by walidnaiji       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "parsing.h"
 
 void	*ft_add_front_list(t_parser *list, char *line)
 {

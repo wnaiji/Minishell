@@ -6,7 +6,7 @@
 /*   By: walidnaiji <walidnaiji@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 14:55:25 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/09/14 11:20:15 by walidnaiji       ###   ########.fr       */
+/*   Updated: 2023/09/14 22:15:46 by walidnaiji       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <stdio.h>
-# include "Libft/libft.h"
+# include "../../Libft/libft.h"
 
 # define SIMPLE_QUOTE 39
 # define DOUBLE_QUOTE 34
@@ -81,19 +81,20 @@ void		basic_parsing(char *input);
 
 //////////LEXER//////////
 //outils_lexer.c
-t_lexer		*check_space(t_lexer *lexer, char *input, int *i);
-t_operator	token_operator(char *str, int *i);
+int			forward_in_space(char *input, int *i);
+t_operator	token_operator(char *str);
 char		*chardup(char c);
 char		*charjoin(char *str, char c);
 int			special_char(char c);
-//lexer.c
+//lexer_management_quoted.c
 t_lexer		*simple_quote(t_lexer *lexer, char *input, int *i);
 t_lexer		*double_quote(t_lexer *lexer, char *input, int *i);
 t_lexer		*no_quote(t_lexer *lexer, char *input, int *i);
+//lexer.c
 t_lexer		*operator(t_lexer *lexer, char *input, int *i);
+t_lexer		*is_cmd(t_lexer *lexer, char *input, int *i);
+t_lexer	*space(t_lexer *lexer, char *input, int *i);
 void		init_lexer(char *input);
-
-//////////PARSER//////////
 
 //////////PRINT_ERROR//////////
 //print_error.c
