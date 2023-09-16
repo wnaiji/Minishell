@@ -6,7 +6,7 @@
 /*   By: walidnaiji <walidnaiji@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 14:58:41 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/09/14 21:26:58 by walidnaiji       ###   ########.fr       */
+/*   Updated: 2023/09/16 15:21:47 by walidnaiji       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,32 @@ void	print_lexer(t_lexer *lexer)
 	}
 }
 
-//----------------------- Parser
+//----------------------- visualisation du parser
+
+void	print_parser(t_parser *parser)
+{
+	if (!parser)
+		return ;
+	t_parser	*tmp;
+	int			i;
+
+	while (parser->prev)
+		parser = parser->prev;
+	tmp = parser;
+	i = 0;
+	while (tmp)
+	{
+		printf("#####PARSER#####\n");
+		while (parser->cmd[i])
+		{
+			printf("CMD:		#%s#\n", parser->cmd[i]);
+			i++;
+		}
+		printf("BUILTIN:	#%d#\n", parser->builtin);
+		printf("REDIREC:	#%d#\n", parser->redirection);
+		tmp = tmp->next;
+	}
+}
 
 //----------------------- prompt
 
@@ -60,8 +85,7 @@ int	main(int argc, char **argv, char **envp)
 	{
 		input = prompt(input);
 		basic_parsing(input); //faire en sorte lors d'une erreur la fonction renvoie sur un prompt
-		init_lexer(input); // free input à la sortie
-		//penser a free input
+		init_parser(init_lexer(input));
 	}
 	if (argc > 1)
 		printf("Error: do not give an argument to the executable\n");

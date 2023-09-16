@@ -6,11 +6,11 @@
 /*   By: walidnaiji <walidnaiji@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 11:07:25 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/09/14 21:20:25 by walidnaiji       ###   ########.fr       */
+/*   Updated: 2023/09/15 10:58:58 by walidnaiji       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
+#include "lexer.h"
 
 int	forward_in_space(char *input, int *i)
 {

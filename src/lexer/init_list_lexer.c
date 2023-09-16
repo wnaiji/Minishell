@@ -1,31 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_list.c                                          :+:      :+:    :+:   */
+/*   init_list_lexer.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: walidnaiji <walidnaiji@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 11:20:30 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/09/14 22:16:51 by walidnaiji       ###   ########.fr       */
+/*   Updated: 2023/09/15 13:41:46 by walidnaiji       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
+#include "lexer.h"
 
-void	*ft_add_front_list(t_parser *list, char *line)
-{
-	t_parser	*newline;
-
-	newline = malloc(sizeof(t_parser));
-	if (!newline)
-		return (NULL);
-	newline->str = line;
-	newline->prev = NULL;
-	newline->next = list;
-	return (newline);
-}
-
-void	*ft_add_back_list(t_lexer *list, char *line)
+void	*lexer_add_back_list(t_lexer *list, char *line)
 {
 	t_lexer	*newline;
 	t_lexer	*tmp;
@@ -47,51 +34,4 @@ void	*ft_add_back_list(t_lexer *list, char *line)
 		newline->prev = tmp;
 		return (list);
 	}
-}
-
-void	*ft_delete_in_head(t_lexer *list)
-{
-	t_lexer	*nxt;
-
-	if (!list)
-		return (NULL);
-	nxt = list->next;
-	free(list);
-	return (nxt);
-}
-
-void	*ft_delete_at_back(t_lexer *list)
-{
-	t_lexer	*tmp;
-	t_lexer	*tmp2;
-
-	tmp = list;
-	tmp2 = list;
-	if (!list)
-		return (list);
-	if (list->next == NULL)
-	{
-		free(list);
-		return (list);
-	}
-	while (tmp->next)
-	{
-		tmp2 = tmp;
-		tmp = tmp->next;
-	}
-	tmp2->next = NULL;
-	free(tmp);
-	return (list);
-}
-
-char	*ft_last_content(t_lexer *list)
-{
-	t_lexer	*tmp;
-
-	tmp = list;
-	if (!list)
-		return (NULL);
-	while (tmp->next)
-		tmp = tmp->next;
-	return (tmp->str);
 }

@@ -6,11 +6,11 @@
 /*   By: walidnaiji <walidnaiji@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 14:54:56 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/09/13 17:23:24 by walidnaiji       ###   ########.fr       */
+/*   Updated: 2023/09/15 10:57:52 by walidnaiji       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
+#include "lexer.h"
 
 int	check_simple_quote(char *str, int *i)
 {

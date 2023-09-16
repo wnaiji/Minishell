@@ -1,20 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.h                                          :+:      :+:    :+:   */
+/*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: walidnaiji <walidnaiji@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 14:55:25 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/09/14 22:15:46 by walidnaiji       ###   ########.fr       */
+/*   Updated: 2023/09/16 14:59:50 by walidnaiji       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSING_H
-# define PARSING_H
+#ifndef LEXER_H
+# define LEXER_H
 
-# include <readline/readline.h>
-# include <readline/history.h>
 # include <stdio.h>
 # include "../../Libft/libft.h"
 
@@ -26,33 +24,22 @@
 
 typedef enum
 {
+	NO_OPERATOR,
 	PIPE,
 	HEREDOC,
 	SPACE,
 	INFILE,
 	OUTFILE,
 	OUTFILE_AP_MOD,
-	NO_OPERATOR
+	CMD
 }		t_operator;
 
 typedef enum
 {
-	SIMPLE_QUOTED,
-	DOUBLE_QUOTED,
 	NO_QUOTED,
+	SIMPLE_QUOTED,
+	DOUBLE_QUOTED
 }		t_quoted;
-
-typedef enum
-{
-	ECHO,
-	CD,
-	PWD,
-	EXPORT,
-	UNSET,
-	ENV,
-	EXIT,
-	NO_BUILTIN
-}		t_builtin;
 
 typedef struct	s_lexer
 {
@@ -63,15 +50,6 @@ typedef struct	s_lexer
 	struct s_lexer	*next;
 	struct s_lexer	*prev;
 }				t_lexer;
-
-typedef struct	s_parser
-{
-	char			*str;
-	t_builtin		builtin;
-	t_operator		redirection;
-	struct s_parser	*next;
-	struct s_parser	*prev;
-}				t_parser;
 
 //////////BASIC_PARSING///////////
 //basic_parsing.c
@@ -93,20 +71,16 @@ t_lexer		*no_quote(t_lexer *lexer, char *input, int *i);
 //lexer.c
 t_lexer		*operator(t_lexer *lexer, char *input, int *i);
 t_lexer		*is_cmd(t_lexer *lexer, char *input, int *i);
-t_lexer	*space(t_lexer *lexer, char *input, int *i);
-void		init_lexer(char *input);
+t_lexer		*space(t_lexer *lexer, char *input, int *i);
+t_lexer		*init_lexer(char *input);
 
 //////////PRINT_ERROR//////////
 //print_error.c
 void		error_syntax(char *str);
 
 //Management of linked lists:
-// ft_list.c
-void		*ft_add_front_list(t_parser *list, char *line);
-void		*ft_add_back_list(t_lexer *list, char *line);
-void		*ft_delete_in_head(t_lexer *list);
-void		*ft_delete_at_back(t_lexer *list);
-char		*ft_last_content(t_lexer *list);
+//init_list_lexer.c
+void		*lexer_add_back_list(t_lexer *list, char *line);
 
 //////////PRINT_RESULT//////////
 //main.c

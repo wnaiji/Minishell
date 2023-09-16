@@ -6,11 +6,11 @@
 /*   By: walidnaiji <walidnaiji@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 16:30:39 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/09/14 21:33:06 by walidnaiji       ###   ########.fr       */
+/*   Updated: 2023/09/16 15:20:50 by walidnaiji       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
+#include "lexer.h"
 
 t_lexer	*operator(t_lexer *lexer, char *input, int *i)
 {
@@ -45,7 +45,7 @@ t_lexer	*is_cmd(t_lexer *lexer, char *input, int *i)
 
 t_lexer	*space(t_lexer *lexer, char *input, int *i)
 {
-	lexer = ft_add_back_list(lexer, NULL);
+	lexer = lexer_add_back_list(lexer, NULL);
 	if (lexer->next)
 		lexer = lexer->next;
 	lexer->str = chardup(input[*i]);
@@ -59,7 +59,7 @@ t_lexer	*space(t_lexer *lexer, char *input, int *i)
 	return (lexer);
 }
 
-void	init_lexer(char *input)
+t_lexer	*init_lexer(char *input)
 {
 	int		i;
 	char	*str;
@@ -81,6 +81,7 @@ void	init_lexer(char *input)
 			lexer = no_quote(lexer, str, &i);
 		i++;
 	}
-	print_lexer(lexer);
+	while (lexer && lexer->prev)
+		lexer = lexer->prev;
+	return (lexer);
 }
-// séparé les commandes par des espaces

@@ -6,11 +6,11 @@
 /*   By: walidnaiji <walidnaiji@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 15:35:50 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/09/14 21:33:09 by walidnaiji       ###   ########.fr       */
+/*   Updated: 2023/09/15 13:42:26 by walidnaiji       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
+#include "lexer.h"
 
 t_lexer	*simple_quote(t_lexer *lexer, char *input, int *i)
 {
@@ -20,7 +20,7 @@ t_lexer	*simple_quote(t_lexer *lexer, char *input, int *i)
 	len = 0;
 	(*i)++;
 	start = *i;
-	lexer = ft_add_back_list(lexer, NULL);
+	lexer = lexer_add_back_list(lexer, NULL);
 	if (lexer->next)
 		lexer = lexer->next;
 	while (input[(*i)++] != SIMPLE_QUOTE)
@@ -40,7 +40,7 @@ t_lexer	*double_quote(t_lexer *lexer, char *input, int *i)
 	len = 0;
 	(*i)++;
 	start = *i;
-	lexer = ft_add_back_list(lexer, NULL);
+	lexer = lexer_add_back_list(lexer, NULL);
 	if (lexer->next)
 		lexer = lexer->next;
 	while (input[(*i)++] != DOUBLE_QUOTE)
@@ -57,7 +57,7 @@ t_lexer	*no_quote(t_lexer *lexer, char *input, int *i)
 	char	*tmp;
 
 	tmp = NULL;
-	lexer = ft_add_back_list(lexer, NULL);
+	lexer = lexer_add_back_list(lexer, NULL);
 	if (lexer->next)
 		lexer = lexer->next;
 	if (special_char(input[*i]) != 0)
