@@ -6,12 +6,24 @@
 /*   By: walidnaiji <walidnaiji@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/15 10:56:57 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/09/16 18:12:45 by walidnaiji       ###   ########.fr       */
+/*   Updated: 2023/09/16 21:29:12 by walidnaiji       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
-
+/*
+-Renomer les variables des fonctions de gestion des listes chaîné correctement
+-Verifier les fonctions lists au niveau des suppresions de maillon
+	si les valeur donné à prev et next sont bien correct pour le bon
+	fonctionement de la lecture des listes
+-la découpe des commandes ou des redirections ne sont pas correcte
+	quand aucune espace n'est mise, elle devra donc couper a la
+	rencontre d'un opperateur
+-une fois que la liste et construite, que la vérification des enum
+	est bon, que le split des arguments et bon, il faudra trim
+	tout les operateurs
+-pour terminé la vérification de la norme et des leaks sur la fin
+	de ce parsing*/
 t_parser	*is_infile(t_lexer *lexer, t_parser *parser)
 {
 	char	*tmp;
@@ -39,9 +51,6 @@ t_parser	*is_infile(t_lexer *lexer, t_parser *parser)
 				free(tmp);
 				lexer = delete_node(lexer);
 			}
-			//parser = parser_add_back_list(parser, NULL);
-			//if (parser->next)
-			//	parser = parser->next;
 		}
 		if (lexer)
 			lexer = lexer->next;
