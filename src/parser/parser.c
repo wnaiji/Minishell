@@ -6,7 +6,7 @@
 /*   By: walidnaiji <walidnaiji@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/15 10:56:57 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/09/16 15:13:25 by walidnaiji       ###   ########.fr       */
+/*   Updated: 2023/09/16 18:12:45 by walidnaiji       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,19 @@ t_parser	*is_infile(t_lexer *lexer, t_parser *parser)
 	tmp = NULL;
 	if (!lexer)
 		return (NULL);
-	parser = parser_add_back_list(parser, NULL);
-	if (parser->next)
-		parser = parser->next;
-	while (lexer->next)
+	while (lexer)
 	{
 		if (lexer->operator == INFILE || lexer->operator == HEREDOC)
 		{
+			parser = parser_add_back_list(parser, NULL);
+			if (parser->next)
+				parser = parser->next;
 			parser->str = ft_strdup(lexer->str);
 			parser->redirection = lexer->operator;
 			parser->builtin = NO_BUILTIN;
+
 			lexer = delete_node(lexer);
-			while (lexer->next && lexer->operator != SPACE)
+			while (lexer && lexer->operator != SPACE)
 			{
 				tmp = ft_strjoin(parser->str, lexer->str);
 				free(parser->str);
@@ -38,21 +39,15 @@ t_parser	*is_infile(t_lexer *lexer, t_parser *parser)
 				free(tmp);
 				lexer = delete_node(lexer);
 			}
-			parser = parser_add_back_list(parser, NULL);
-			if (parser->next)
-				parser = parser->next;
+			//parser = parser_add_back_list(parser, NULL);
+			//if (parser->next)
+			//	parser = parser->next;
 		}
-		lexer = lexer->next;
+		if (lexer)
+			lexer = lexer->next;
 	}
-	if (parser_last_content(parser) == NULL)
-		parser = parser_delete_at_back(parser);
 	return (parser);
 }
-
-//is_builtin
-//Utiliser cette fonction apres avoir split les arguments
-//il faudre tolower la premiere string et seulement apres
-//lui donné le bon enum
 
 t_parser	*is_cmd_or_builtin(t_lexer *lexer, t_parser *parser)
 {
@@ -123,6 +118,9 @@ t_parser	*is_outfile(t_lexer *lexer, t_parser *parser)
 		parser = parser_delete_at_back(parser);
 	return (parser);
 }
+//le parser ne reagi pas du tout comme prevu
+//tester les fontion une a une, comprendre pourquoi
+//dans le infile la liste chaîné n'a aucun contenu
 
 void	init_parser(t_lexer *lexer)
 {
@@ -130,18 +128,20 @@ void	init_parser(t_lexer *lexer)
 
 	parser = NULL;
 	parser = is_infile(lexer, parser);
+	printf("je suis ici\n");
+	print_parser(parser);
 	if (lexer)
 	{
 		while (lexer->prev)
 			lexer = lexer->prev;
 	}
-	parser = is_outfile(lexer, parser);
+	//parser = is_outfile(lexer, parser);
 	if (lexer)
 	{
 		while (lexer->prev)
 			lexer = lexer->prev;
 	}
-	parser = is_cmd_or_builtin(lexer, parser);
+	//parser = is_cmd_or_builtin(lexer, parser);
 	if (parser)
 	{
 		while (parser->prev)

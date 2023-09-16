@@ -6,7 +6,7 @@
 /*   By: walidnaiji <walidnaiji@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/15 10:56:39 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/09/16 15:18:23 by walidnaiji       ###   ########.fr       */
+/*   Updated: 2023/09/16 16:31:05 by walidnaiji       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,12 @@ t_parser	*init_node_parser(t_parser *parser);
 //Management of linked lists:
 //init_list_parser.c
 void		*parser_add_back_list(t_parser *list, char *line);
-void		*delete_node(t_parser *list);
+void		*delete_node(t_lexer *list);
 void		*parser_delete_at_back(t_parser *list);
 char		*parser_last_content(t_parser *list);
 
 ///////////PRINT_RESULT//////////
+//main.c
+void	print_parser(t_parser *parser);
 
 #endif

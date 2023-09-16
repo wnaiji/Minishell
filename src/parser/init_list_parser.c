@@ -6,7 +6,7 @@
 /*   By: walidnaiji <walidnaiji@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/15 13:44:02 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/09/16 15:19:18 by walidnaiji       ###   ########.fr       */
+/*   Updated: 2023/09/16 17:53:44 by walidnaiji       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,49 +36,59 @@ void	*parser_add_back_list(t_parser *list, char *line)
 	}
 }
 
-void	*delete_node(t_parser *list)
+void	*delete_node(t_lexer *list)
 {
-	void	*nxt;
+	t_lexer	*tmp;
+	void	*pointer;
 
-	if (!list)
-		return (list);
-	if (list->next == NULL)
+	tmp = list->next;
+	//if (!list)
+	//	return (list);
+	if (list->prev && list->next)
 	{
-		free(list);
-		return (list);
+		list->prev->next = list->next;
+		list->next->prev = list->prev;
+		free(list);// il faudra eventuellement faire
+		//en sorte de passer au maillon suivant avant
+		//de return
+		return (tmp);
 	}
-	else if (list->prev == NULL)
+	else if (!list->prev && list->next)
 	{
-		nxt = list->next;
+		pointer = list->next;
+		list->next->prev = NULL;
 		free(list);
-		return (nxt);
+		return (pointer);
 	}
-	nxt = list->next;
-	list->prev->next = list->next;
+	else if (list->prev && !list->next)
+	{
+		pointer = list->prev;
+		list->prev->next = NULL;
+		free(list);
+		return (pointer);
+	}
 	free(list);
-	return (nxt);
+	return (NULL);
 }
 
 void	*parser_delete_at_back(t_parser *list)
 {
 	t_parser	*tmp;
-	t_parser	*tmp2;
 
 	tmp = list;
-	tmp2 = list;
 	if (!list)
 		return (list);
-	if (list->next == NULL)
+	if (!tmp->next && !tmp->prev)
 	{
 		free(list);
-		return (list);
+		return (NULL);
 	}
-	while (tmp->next)
-	{
-		tmp2 = tmp;
+	while (tmp)
 		tmp = tmp->next;
-	}
-	tmp2->next = NULL;
+	if (tmp->prev)
+		tmp->prev->next = NULL;
+	if (!list->next)
+		list = list->prev;
 	free(tmp);
 	return (list);
 }
