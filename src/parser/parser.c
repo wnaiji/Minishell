@@ -6,13 +6,14 @@
 /*   By: walidnaiji <walidnaiji@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/15 10:56:57 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/09/16 21:29:12 by walidnaiji       ###   ########.fr       */
+/*   Updated: 2023/09/19 10:30:49 by walidnaiji       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 /*
--Renomer les variables des fonctions de gestion des listes chaîné correctement
+-La fonction is_infile est correcte en terme de gestion et de retour
+	de liste chaîné, corriger les 2 autres avant de continuer
 -Verifier les fonctions lists au niveau des suppresions de maillon
 	si les valeur donné à prev et next sont bien correct pour le bon
 	fonctionement de la lecture des listes
@@ -24,36 +25,36 @@
 	tout les operateurs
 -pour terminé la vérification de la norme et des leaks sur la fin
 	de ce parsing*/
-t_parser	*is_infile(t_lexer *lexer, t_parser *parser)
+t_parser	*is_infile(t_lexer **lexer, t_parser *parser)
 {
 	char	*tmp;
 
 	tmp = NULL;
-	if (!lexer)
+	if (!*lexer)
 		return (NULL);
-	while (lexer)
+	while (*lexer)
 	{
-		if (lexer->operator == INFILE || lexer->operator == HEREDOC)
+		if ((*lexer)->operator == INFILE || (*lexer)->operator == HEREDOC)
 		{
 			parser = parser_add_back_list(parser, NULL);
 			if (parser->next)
 				parser = parser->next;
-			parser->str = ft_strdup(lexer->str);
-			parser->redirection = lexer->operator;
+			parser->str = ft_strdup((*lexer)->str);
+			parser->redirection = (*lexer)->operator;
 			parser->builtin = NO_BUILTIN;
 
-			lexer = delete_node(lexer);
-			while (lexer && lexer->operator != SPACE)
+			*lexer = delete_node(*lexer);
+			while (*lexer && (*lexer)->operator != SPACE)
 			{
-				tmp = ft_strjoin(parser->str, lexer->str);
+				tmp = ft_strjoin(parser->str, (*lexer)->str);
 				free(parser->str);
 				parser->str = ft_strdup(tmp);
 				free(tmp);
-				lexer = delete_node(lexer);
+				*lexer = delete_node(*lexer);
 			}
 		}
-		if (lexer)
-			lexer = lexer->next;
+		if (*lexer)
+			*lexer = (*lexer)->next;
 	}
 	return (parser);
 }
@@ -136,7 +137,7 @@ void	init_parser(t_lexer *lexer)
 	t_parser	*parser;
 
 	parser = NULL;
-	parser = is_infile(lexer, parser);
+	parser = is_infile(&lexer, parser);
 	printf("je suis ici\n");
 	print_parser(parser);
 	if (lexer)

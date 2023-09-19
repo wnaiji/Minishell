@@ -6,25 +6,25 @@
 /*   By: walidnaiji <walidnaiji@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/15 13:44:02 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/09/16 17:53:44 by walidnaiji       ###   ########.fr       */
+/*   Updated: 2023/09/19 09:57:28 by walidnaiji       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 
-void	*parser_add_back_list(t_parser *list, char *line)
+void	*parser_add_back_list(t_parser *parser, char *str)
 {
 	t_parser	*newline;
 	t_parser	*tmp;
 
-	tmp = list;
+	tmp = parser;
 	newline = malloc(sizeof(t_parser));
 	if (!newline)
 		return (NULL);
-	newline->str = line;
+	newline->str = str;
 	newline->prev = NULL;
 	newline->next = NULL;
-	if (!list)
+	if (!parser)
 		return (newline);
 	else
 	{
@@ -32,73 +32,77 @@ void	*parser_add_back_list(t_parser *list, char *line)
 			tmp = tmp->next;
 		tmp->next = newline;
 		newline->prev = tmp;
-		return (list);
+		return (parser);
 	}
 }
 
-void	*delete_node(t_lexer *list)
+void	*delete_node(t_lexer *lexer)
 {
 	t_lexer	*tmp;
 	void	*pointer;
 
-	tmp = list->next;
+	tmp = lexer->next;
 	//if (!list)
 	//	return (list);
-	if (list->prev && list->next)
+	if (lexer->prev && lexer->next)
 	{
-		list->prev->next = list->next;
-		list->next->prev = list->prev;
-		free(list);// il faudra eventuellement faire
+		lexer->prev->next = lexer->next;
+		lexer->next->prev = lexer->prev;
+		free(lexer);// il faudra eventuellement faire
 		//en sorte de passer au maillon suivant avant
 		//de return
 		return (tmp);
 	}
-	else if (!list->prev && list->next)
+	else if (!lexer->prev && lexer->next)
 	{
-		pointer = list->next;
-		list->next->prev = NULL;
-		free(list);
+		pointer = lexer->next;
+		lexer->next->prev = NULL;
+		free(lexer);
 		return (pointer);
 	}
-	else if (list->prev && !list->next)
+	else if (lexer->prev && !lexer->next)
 	{
-		pointer = list->prev;
-		list->prev->next = NULL;
-		free(list);
+		pointer = lexer->prev;
+		lexer->prev->next = NULL;
+		free(lexer);
 		return (pointer);
 	}
-	free(list);
+	if (!lexer->prev && !lexer->next)
+	{
+		free(lexer);
+		return (NULL);
+	}
 	return (NULL);
 }
 
-void	*parser_delete_at_back(t_parser *list)
+void	*parser_delete_at_back(t_parser *parser)
 {
 	t_parser	*tmp;
 
-	tmp = list;
-	if (!list)
-		return (list);
+	tmp = parser;
+	if (!parser)
+		return (parser);
 	if (!tmp->next && !tmp->prev)
 	{
-		free(list);
+		free(parser);
 		return (NULL);
 	}
 	while (tmp)
 		tmp = tmp->next;
 	if (tmp->prev)
 		tmp->prev->next = NULL;
-	if (!list->next)
-		list = list->prev;
+	if (!parser->next)
+		parser = parser->prev;
 	free(tmp);
-	return (list);
+	return (parser);
 }
 
-char	*parser_last_content(t_parser *list)
+char	*parser_last_content(t_parser *parser)
 {
 	t_parser	*tmp;
 
-	tmp = list;
-	if (!list)
+	tmp = parser;
+	if (!parser)
 		return (0);
 	while (tmp->next)
 		tmp = tmp->next;
