@@ -6,7 +6,7 @@
 #    By: walidnaiji <walidnaiji@student.42.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/11 11:42:09 by wnaiji            #+#    #+#              #
-#    Updated: 2023/09/19 09:57:41 by walidnaiji       ###   ########.fr        #
+#    Updated: 2023/09/22 10:05:21 by walidnaiji       ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,8 +33,6 @@ SRC =	$(SRC_MAIN) \
 
 OBJ_DIR = obj
 OBJS = $(patsubst $(SRC_PATH)%.c, $(OBJ_DIR)/%.o, $(SRC))
-#OBJS = $(addprefix $(OBJ_DIR)/,$(notdir $(SRC:.c=.o)))
-#OBJS = ${SRC:.c=.o}
 
 NAME = minishell
 

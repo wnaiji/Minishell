@@ -6,7 +6,7 @@
 /*   By: walidnaiji <walidnaiji@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/15 13:44:02 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/09/19 09:57:28 by walidnaiji       ###   ########.fr       */
+/*   Updated: 2023/09/22 09:55:31 by walidnaiji       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,41 +38,27 @@ void	*parser_add_back_list(t_parser *parser, char *str)
 
 void	*delete_node(t_lexer *lexer)
 {
-	t_lexer	*tmp;
 	void	*pointer;
 
-	tmp = lexer->next;
-	//if (!list)
-	//	return (list);
+	pointer = NULL;
 	if (lexer->prev && lexer->next)
 	{
+		pointer = lexer->next;
 		lexer->prev->next = lexer->next;
 		lexer->next->prev = lexer->prev;
-		free(lexer);// il faudra eventuellement faire
-		//en sorte de passer au maillon suivant avant
-		//de return
-		return (tmp);
 	}
 	else if (!lexer->prev && lexer->next)
 	{
 		pointer = lexer->next;
 		lexer->next->prev = NULL;
-		free(lexer);
-		return (pointer);
 	}
 	else if (lexer->prev && !lexer->next)
 	{
 		pointer = lexer->prev;
 		lexer->prev->next = NULL;
-		free(lexer);
-		return (pointer);
 	}
-	if (!lexer->prev && !lexer->next)
-	{
-		free(lexer);
-		return (NULL);
-	}
-	return (NULL);
+	free(lexer);
+	return (pointer);
 }
 
 void	*parser_delete_at_back(t_parser *parser)

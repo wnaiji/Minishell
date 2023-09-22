@@ -6,7 +6,7 @@
 /*   By: walidnaiji <walidnaiji@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/15 10:56:39 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/09/19 10:06:42 by walidnaiji       ###   ########.fr       */
+/*   Updated: 2023/09/22 09:34:43 by walidnaiji       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ typedef struct	s_parser
 //////////PARSER//////////
 //parser.c
 t_parser	*is_infile(t_lexer **lexer, t_parser *parser);
-t_parser	*is_cmd_or_builtin(t_lexer *lexer, t_parser *parser);
-t_parser	*is_outfile(t_lexer *lexer, t_parser *parser);
+t_parser	*is_cmd_or_builtin(t_lexer **lexer, t_parser *parser);
+t_parser	*is_outfile(t_lexer **lexer, t_parser *parser);
 void		init_parser(t_lexer *lexer);
 //outils_parser.c
 int			is_builtin(char *str);
