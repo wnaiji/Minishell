@@ -6,7 +6,7 @@
 /*   By: walidnaiji <walidnaiji@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/15 13:44:02 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/09/22 09:55:31 by walidnaiji       ###   ########.fr       */
+/*   Updated: 2023/09/22 23:24:37 by walidnaiji       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,30 +36,7 @@ void	*parser_add_back_list(t_parser *parser, char *str)
 	}
 }
 
-void	*delete_node(t_lexer *lexer)
-{
-	void	*pointer;
 
-	pointer = NULL;
-	if (lexer->prev && lexer->next)
-	{
-		pointer = lexer->next;
-		lexer->prev->next = lexer->next;
-		lexer->next->prev = lexer->prev;
-	}
-	else if (!lexer->prev && lexer->next)
-	{
-		pointer = lexer->next;
-		lexer->next->prev = NULL;
-	}
-	else if (lexer->prev && !lexer->next)
-	{
-		pointer = lexer->prev;
-		lexer->prev->next = NULL;
-	}
-	free(lexer);
-	return (pointer);
-}
 
 void	*parser_delete_at_back(t_parser *parser)
 {

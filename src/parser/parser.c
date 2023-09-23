@@ -6,13 +6,13 @@
 /*   By: walidnaiji <walidnaiji@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/15 10:56:57 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/09/22 10:57:05 by walidnaiji       ###   ########.fr       */
+/*   Updated: 2023/09/22 23:30:36 by walidnaiji       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 /*
--Au niveau de la fonction infile quand nous notons une redirestion
+-Au niveau de la fonction infile quand nous notons une redirection
 	outfile le premier maillon est dupliqué
 -La fonction is_infile est correcte en terme de gestion et de retour
 	de liste chaîné, corriger les 2 autres avant de continuer

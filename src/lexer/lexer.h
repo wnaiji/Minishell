@@ -6,7 +6,7 @@
 /*   By: walidnaiji <walidnaiji@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 14:55:25 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/09/22 10:26:28 by walidnaiji       ###   ########.fr       */
+/*   Updated: 2023/09/22 23:26:03 by walidnaiji       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,15 +72,16 @@ t_lexer		*no_quote(t_lexer *lexer, char *input, int *i);
 t_lexer		*operator(t_lexer *lexer, char *input, int *i);
 t_lexer		*is_cmd(t_lexer *lexer, char *input, int *i);
 t_lexer		*space(t_lexer *lexer, char *input, int *i);
+t_lexer		*final_check_lexer(t_lexer *lexer);
 t_lexer		*init_lexer(char *input);
+//Management of linked lists:
+//init_list_lexer.c
+void		*lexer_add_back_list(t_lexer *list, char *line);
+void		*delete_node(t_lexer *lexer);
 
 //////////PRINT_ERROR//////////
 //print_error.c
 void		error_syntax(char *str);
-
-//Management of linked lists:
-//init_list_lexer.c
-void		*lexer_add_back_list(t_lexer *list, char *line);
 
 //////////PRINT_RESULT//////////
 //main.c
