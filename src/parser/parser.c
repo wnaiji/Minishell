@@ -6,7 +6,7 @@
 /*   By: walidnaiji <walidnaiji@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/15 10:56:57 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/09/22 23:30:36 by walidnaiji       ###   ########.fr       */
+/*   Updated: 2023/09/23 12:00:56 by walidnaiji       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ t_parser	*is_infile(t_lexer **lexer, t_parser *parser)
 	{
 		if ((*lexer)->operator == INFILE || (*lexer)->operator == HEREDOC)
 		{
+printf("je suis ici %s\n", (*lexer)->str);
 			parser = parser_add_back_list(parser, NULL);
 			if (parser->next)
 				parser = parser->next;

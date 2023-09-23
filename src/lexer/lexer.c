@@ -6,7 +6,7 @@
 /*   By: walidnaiji <walidnaiji@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 16:30:39 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/09/22 23:27:36 by walidnaiji       ###   ########.fr       */
+/*   Updated: 2023/09/23 12:13:04 by walidnaiji       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_lexer	*operator(t_lexer *lexer, char *input, int *i)
 		|| (input[*i] == '>' && input[*i + 1] == '>'))
 		lexer->str = charjoin(lexer->str, input[*i]);
 	lexer->quoted = NO_QUOTED;
-	lexer->operator = token_operator(input);
+	lexer->operator = token_operator(lexer->str);
 	if (lexer->operator == HEREDOC || lexer->operator == OUTFILE_AP_MOD)
 		(*i)++;
 	return (lexer);
