@@ -6,12 +6,14 @@
 /*   By: walidnaiji <walidnaiji@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/15 10:56:57 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/09/23 15:58:36 by walidnaiji       ###   ########.fr       */
+/*   Updated: 2023/09/23 17:08:26 by walidnaiji       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 /*
+-il faudra pouvoir séparer en deux maillons quand nous avons a faire à plusieurs
+	infile collé sans espaces ex: <in<in
 -Un nouvel enum est mis en place dans la structure de la liste chaîne du parser
 	elle determinera le stdin et le stdout lors de l'éxécution de la commande
 -La fonction is_infile est correcte en terme de gestion et de retour
@@ -33,29 +35,12 @@ t_parser	*is_infile(t_lexer **lexer, t_parser *parser)
 
 	tmp = NULL;
 	if (!*lexer)
-		return (NULL);
+		return (parser);
 	while (*lexer)
 	{
 		if ((*lexer)->operator == INFILE || (*lexer)->operator == HEREDOC)
 		{
-			parser = parser_add_back_list(parser, NULL);
-			if (parser->next)
-				parser = parser->next;
-			parser->str = ft_strdup((*lexer)->str);
-			parser->operator = (*lexer)->operator;
-			parser->builtin = NO_BUILTIN;
-			*lexer = delete_node(*lexer);
-			while (*lexer && ((*lexer)->operator == NO_OPERATOR
-				|| (*lexer)->operator == SPACE))
-			{
-				tmp = ft_strjoin(parser->str, (*lexer)->str);
-				free(parser->str);
-				parser->str = ft_strdup(tmp);
-				free(tmp);
-				*lexer = delete_node(*lexer);
-				if (*lexer && ((*lexer)->operator == SPACE))
-					break ;
-			}
+			init_node_infile(&parser, &(*lexer), &tmp);
 		}
 		else if (*lexer)
 			*lexer = (*lexer)->next;
@@ -69,27 +54,12 @@ t_parser	*is_outfile(t_lexer **lexer, t_parser *parser)
 
 	tmp = NULL;
 	if (!*lexer)
-		return (NULL);
-	while ((*lexer)->next)
+		return (parser);
+	while (*lexer)
 	{
 		if ((*lexer)->operator == OUTFILE || (*lexer)->operator == OUTFILE_AP_MOD)
 		{
-			parser = parser_add_back_list(parser, NULL);
-			if (parser->next)
-				parser = parser->next;
-			parser->str = ft_strdup((*lexer)->str);
-			parser->operator = (*lexer)->operator;
-			parser->builtin = NO_BUILTIN;
-			*lexer = delete_node(*lexer);
-			while (*lexer && ((*lexer)->operator == NO_OPERATOR
-				|| (*lexer)->operator == SPACE))
-			{
-				tmp = ft_strjoin(parser->str, (*lexer)->str);
-				free(parser->str);
-				parser->str = ft_strdup(tmp);
-				free(tmp);
-				*lexer = delete_node(*lexer);
-			}
+			init_node_outfile(&parser, &(*lexer), &tmp);
 		}
 		else if (*lexer)
 			*lexer = (*lexer)->next;
@@ -143,7 +113,8 @@ void	init_parser(t_lexer *lexer)
 		while (lexer->prev)
 			lexer = lexer->prev;
 	}
-	//parser = is_outfile(&lexer, parser);
+	parser = is_outfile(&lexer, parser);
+	print_parser(parser);
 	if (lexer)
 	{
 		while (lexer->prev)
@@ -156,5 +127,4 @@ void	init_parser(t_lexer *lexer)
 	//		parser = parser->prev;
 	//}
 	//parser = init_node_parser(parser);
-	print_parser(parser);
 }

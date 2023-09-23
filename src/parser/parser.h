@@ -6,7 +6,7 @@
 /*   By: walidnaiji <walidnaiji@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/15 10:56:39 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/09/23 15:00:34 by walidnaiji       ###   ########.fr       */
+/*   Updated: 2023/09/23 16:49:02 by walidnaiji       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,9 @@ int			is_builtin(char *str);
 char		**split_args(char *str);
 char		*strtolower(char *str, int operator);
 t_parser	*init_node_parser(t_parser *parser);
-
+//init_node_parser.c
+void		init_node_infile(t_parser **parser, t_lexer **lexer, char **tmp);
+void		init_node_outfile(t_parser **parser, t_lexer **lexer, char **tmp);
 
 //Management of linked lists:
 //init_list_parser.c

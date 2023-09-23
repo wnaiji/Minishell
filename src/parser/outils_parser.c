@@ -6,7 +6,7 @@
 /*   By: walidnaiji <walidnaiji@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/15 10:57:16 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/09/22 10:23:32 by walidnaiji       ###   ########.fr       */
+/*   Updated: 2023/09/23 16:55:19 by walidnaiji       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ t_parser	*init_node_parser(t_parser *parser)
 	while (parser->next)
 	{
 		parser->cmd = split_args(parser->str);
-		parser->cmd[0] = strtolower(parser->cmd[0], parser->redirection);
+		parser->cmd[0] = strtolower(parser->cmd[0], parser->operator);
 		// ne pas tolower quand c'est un infile ou outfile
 		parser->builtin = is_builtin(parser->cmd[0]);
 		free(parser->str);
