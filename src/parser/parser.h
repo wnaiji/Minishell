@@ -6,7 +6,7 @@
 /*   By: walidnaiji <walidnaiji@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/15 10:56:39 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/09/23 11:27:12 by walidnaiji       ###   ########.fr       */
+/*   Updated: 2023/09/23 12:31:08 by walidnaiji       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,22 @@ typedef enum
 	EXIT
 }		t_builtin;
 
+typedef enum
+{
+	NO_IO
+	STDIN,
+	STDOUT,
+	IN_PIPE,
+	OUT_PIPE
+}		t_io
+
 typedef struct	s_parser
 {
 	char			*str;
 	char			**cmd;
 	t_builtin		builtin;
-	t_operator		redirection;
+	t_io			io;
+	t_operator		operator;
 	struct s_parser	*next;
 	struct s_parser	*prev;
 }				t_parser;

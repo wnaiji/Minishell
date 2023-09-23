@@ -6,7 +6,7 @@
 /*   By: walidnaiji <walidnaiji@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 16:30:39 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/09/23 12:13:04 by walidnaiji       ###   ########.fr       */
+/*   Updated: 2023/09/23 12:19:10 by walidnaiji       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,5 @@ t_lexer	*init_lexer(char *input)
 		lexer = lexer->prev;
 	if (lexer)
 		lexer = final_check_lexer(lexer);
-	print_lexer(lexer);
 	return (lexer);
 }

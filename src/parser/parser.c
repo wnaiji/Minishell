@@ -6,14 +6,14 @@
 /*   By: walidnaiji <walidnaiji@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/15 10:56:57 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/09/23 12:00:56 by walidnaiji       ###   ########.fr       */
+/*   Updated: 2023/09/23 12:33:30 by walidnaiji       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 /*
--Au niveau de la fonction infile quand nous notons une redirection
-	outfile le premier maillon est dupliqué
+-Un nouvel enum est mis en place dans la structure de la liste chaîne du parser
+	elle determinera le stdin et le stdout lors de l'éxécution de la commande
 -La fonction is_infile est correcte en terme de gestion et de retour
 	de liste chaîné, corriger les 2 autres avant de continuer
 -Verifier les fonctions lists au niveau des suppresions de maillon
@@ -38,7 +38,6 @@ t_parser	*is_infile(t_lexer **lexer, t_parser *parser)
 	{
 		if ((*lexer)->operator == INFILE || (*lexer)->operator == HEREDOC)
 		{
-printf("je suis ici %s\n", (*lexer)->str);
 			parser = parser_add_back_list(parser, NULL);
 			if (parser->next)
 				parser = parser->next;
