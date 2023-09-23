@@ -6,7 +6,7 @@
 /*   By: walidnaiji <walidnaiji@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 14:58:41 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/09/22 10:03:56 by walidnaiji       ###   ########.fr       */
+/*   Updated: 2023/09/23 15:59:02 by walidnaiji       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,14 +48,14 @@ void	print_parser(t_parser *parser)
 	while (tmp)
 	{
 		printf("#####PARSER#####\n");
-		printf("CONTENT:	#%s#\n", parser->str);
 		//while (parser->cmd[i])
 		//{
 		//	printf("CMD:		#%s#\n", parser->cmd[i]);
 		//	i++;
 		//}
-		printf("BUILTIN:	#%d#\n", parser->builtin);
-		printf("REDIREC:	#%d#\n", parser->redirection);
+		printf("CONTENT:	#%s#\n", tmp->str);
+		printf("BUILTIN:	#%d#\n", tmp->builtin);
+		printf("REDIREC:	#%d#\n", tmp->operator);
 		tmp = tmp->next;
 	}
 }

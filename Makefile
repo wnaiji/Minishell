@@ -6,7 +6,7 @@
 #    By: walidnaiji <walidnaiji@student.42.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/11 11:42:09 by wnaiji            #+#    #+#              #
-#    Updated: 2023/09/22 10:05:21 by walidnaiji       ###   ########.fr        #
+#    Updated: 2023/09/23 14:46:34 by walidnaiji       ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,8 @@ SRC_LEXER = $(addprefix $(LEXER_PATH),	basic_parsing.c \
 PARSER_PATH = $(SRC_PATH)parser/
 SRC_PARSER = $(addprefix $(PARSER_PATH),	parser.c \
 											outils_parser.c \
-											init_list_parser.c)
+											init_list_parser.c \
+											init_node_parser.c)
 
 SRC =	$(SRC_MAIN) \
 		$(SRC_LEXER) \

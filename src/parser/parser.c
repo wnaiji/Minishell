@@ -6,7 +6,7 @@
 /*   By: walidnaiji <walidnaiji@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/15 10:56:57 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/09/23 12:33:30 by walidnaiji       ###   ########.fr       */
+/*   Updated: 2023/09/23 15:58:36 by walidnaiji       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ t_parser	*is_infile(t_lexer **lexer, t_parser *parser)
 			if (parser->next)
 				parser = parser->next;
 			parser->str = ft_strdup((*lexer)->str);
-			parser->redirection = (*lexer)->operator;
+			parser->operator = (*lexer)->operator;
 			parser->builtin = NO_BUILTIN;
 			*lexer = delete_node(*lexer);
 			while (*lexer && ((*lexer)->operator == NO_OPERATOR
@@ -53,6 +53,8 @@ t_parser	*is_infile(t_lexer **lexer, t_parser *parser)
 				parser->str = ft_strdup(tmp);
 				free(tmp);
 				*lexer = delete_node(*lexer);
+				if (*lexer && ((*lexer)->operator == SPACE))
+					break ;
 			}
 		}
 		else if (*lexer)
@@ -76,7 +78,7 @@ t_parser	*is_outfile(t_lexer **lexer, t_parser *parser)
 			if (parser->next)
 				parser = parser->next;
 			parser->str = ft_strdup((*lexer)->str);
-			parser->redirection = (*lexer)->operator;
+			parser->operator = (*lexer)->operator;
 			parser->builtin = NO_BUILTIN;
 			*lexer = delete_node(*lexer);
 			while (*lexer && ((*lexer)->operator == NO_OPERATOR
@@ -119,7 +121,7 @@ t_parser	*is_cmd_or_builtin(t_lexer **lexer, t_parser *parser)
 			}
 			*lexer = delete_node(*lexer);
 		}
-		parser->redirection = CMD;
+		parser->operator = CMD;
 		if ((*lexer)->next)
 			*lexer = delete_node(*lexer);
 	}
@@ -148,11 +150,11 @@ void	init_parser(t_lexer *lexer)
 			lexer = lexer->prev;
 	}
 	//parser = is_cmd_or_builtin(&lexer, parser);
-	if (parser)
-	{
-		while (parser->prev)
-			parser = parser->prev;
-	}
+	//if (parser)
+	//{				/*j'ai oublié pk j'ai fait cette boucle*/
+	//	while (parser->prev)
+	//		parser = parser->prev;
+	//}
 	//parser = init_node_parser(parser);
 	print_parser(parser);
 }

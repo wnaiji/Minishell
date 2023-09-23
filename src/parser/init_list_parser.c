@@ -6,7 +6,7 @@
 /*   By: walidnaiji <walidnaiji@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/15 13:44:02 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/09/22 23:24:37 by walidnaiji       ###   ########.fr       */
+/*   Updated: 2023/09/23 15:21:29 by walidnaiji       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,25 @@
 
 void	*parser_add_back_list(t_parser *parser, char *str)
 {
-	t_parser	*newline;
+	t_parser	*newnode;
 	t_parser	*tmp;
 
 	tmp = parser;
-	newline = malloc(sizeof(t_parser));
-	if (!newline)
+	newnode = malloc(sizeof(t_parser));
+	if (!newnode)
 		return (NULL);
-	newline->str = str;
-	newline->prev = NULL;
-	newline->next = NULL;
+	newnode->str = str;
+	newnode->prev = NULL;
+	newnode->next = NULL;
 	if (!parser)
-		return (newline);
+		return (newnode);
 	else
 	{
 		while (tmp->next)
 			tmp = tmp->next;
-		tmp->next = newline;
-		newline->prev = tmp;
-		return (parser);
+		tmp->next = newnode;
+		newnode->prev = tmp;
+		return (newnode);
 	}
 }
 

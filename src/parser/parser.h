@@ -6,7 +6,7 @@
 /*   By: walidnaiji <walidnaiji@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/15 10:56:39 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/09/23 12:31:08 by walidnaiji       ###   ########.fr       */
+/*   Updated: 2023/09/23 15:00:34 by walidnaiji       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,12 @@ typedef enum
 
 typedef enum
 {
-	NO_IO
+	NO_IO,
 	STDIN,
 	STDOUT,
 	IN_PIPE,
 	OUT_PIPE
-}		t_io
+}		t_io;
 
 typedef struct	s_parser
 {
