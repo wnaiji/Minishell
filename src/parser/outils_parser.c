@@ -6,7 +6,7 @@
 /*   By: walidnaiji <walidnaiji@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/15 10:57:16 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/09/24 15:02:48 by walidnaiji       ###   ########.fr       */
+/*   Updated: 2023/09/24 15:32:01 by walidnaiji       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,34 @@ char	*strtolower(char *str, int operator)
 	return (str);
 }
 
-t_input	input()
+t_input	input(t_lexer *lexer)
 {
+	t_lexer	*tmp;
 
+	tmp = lexer;
+	while (tmp->prev)
+	{
+		tmp = tmp->prev;
+		if (tmp->operator == INFILE || tmp->operator == HEREDOC)
+			return (IN_FILE);
+		else if (tmp->operator == PIPE)
+			return (IN_PIPE);
+	}
+	return (STDIN);
 }
 
-t_output	output()
+t_output	output(t_lexer *lexer)
 {
-	
+	t_lexer	*tmp;
+
+	tmp = lexer;
+	while (tmp)
+	{
+		tmp = tmp->next;
+		if (tmp->operator == OUTFILE || tmp->operator == OUTFILE_AP_MOD)
+			return (OUT_FILE);
+		else if (tmp->operator == PIPE)
+			return (OUT_PIPE);
+	}
+	return (STDOUT);
 }

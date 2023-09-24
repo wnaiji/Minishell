@@ -6,16 +6,13 @@
 /*   By: walidnaiji <walidnaiji@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/15 10:56:57 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/09/24 15:10:58 by walidnaiji       ###   ########.fr       */
+/*   Updated: 2023/09/24 16:08:31 by walidnaiji       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 /*
--Par la suite les NO_OPERATOR restant seront des commandes ou des builtins
-	- si elle est précédé d'un pipe il faudra mettre en IO IN_PIPE
-	- si elle est précédé d'un infile il faudra mettre en IO IN_FILE
-	- si elle est suivi d'un NO_OPERATOR
+-reprise
 -la fonction is_infile et is_outfile me semble correcte, commencer celui des cmd
 -Un nouvel enum est mis en place dans la structure de la liste chaîne du parser
 	elle determinera le stdin et le stdout lors de l'éxécution de la commande
@@ -44,8 +41,8 @@ t_parser	*is_infile(t_lexer **lexer, t_parser *parser)
 				*lexer = (*lexer)->next;
 			}
 		}
-		else if (!(*lexer)->next)
-			break ;
+		//else if (!(*lexer)->next)
+		//	break ;
 		else
 			*lexer = (*lexer)->next;
 	}
@@ -61,7 +58,7 @@ t_parser	*is_outfile(t_lexer **lexer, t_parser *parser)
 	{
 		if ((*lexer)->operator == OUTFILE || (*lexer)->operator == OUTFILE_AP_MOD)
 		{
-			init_node_outfile(&parser, &(*lexer));
+			init_node_outfile(&parser, &*lexer);
 			while (*lexer && (*lexer)->operator == NO_OPERATOR)
 			{
 				tmp = ft_strjoin(parser->str, (*lexer)->str);
@@ -72,8 +69,8 @@ t_parser	*is_outfile(t_lexer **lexer, t_parser *parser)
 				*lexer = (*lexer)->next;
 			}
 		}
-		else if (!(*lexer)->next)
-			break ;
+		//else if (!(*lexer)->next)
+		//	break ;
 		else
 			*lexer = (*lexer)->next;
 	}
@@ -89,15 +86,11 @@ t_parser	*is_cmd_or_builtin(t_lexer **lexer, t_parser *parser)
 	{
 		if ((*lexer)->operator == NO_OPERATOR)
 		{
-			parser = parser_add_back_list(parser, NULL);
-			parser->str = ft_strdup((*lexer)->str); // mettre les éléments directement dans **cmd
-			parser->operator = CMD;
-			parser->builtin = NO_BUILTIN;
-			parser->input = input();
-			parser->output = output();
-			if ((*lexer)->prev)
+			init_node_cmd(&parser, &*lexer);
+
 		}
-		*lexer = (*lexer)->next;
+		else
+			*lexer = (*lexer)->next;
 	}
 	return (parser);
 }
