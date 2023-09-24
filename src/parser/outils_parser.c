@@ -6,7 +6,7 @@
 /*   By: walidnaiji <walidnaiji@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/15 10:57:16 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/09/23 16:55:19 by walidnaiji       ###   ########.fr       */
+/*   Updated: 2023/09/24 10:42:41 by walidnaiji       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,20 +53,4 @@ char	*strtolower(char *str, int operator)
 		i++;
 	}
 	return (str);
-}
-
-t_parser	*init_node_parser(t_parser *parser)
-{
-	if (!parser)
-		return (NULL);
-	while (parser->next)
-	{
-		parser->cmd = split_args(parser->str);
-		parser->cmd[0] = strtolower(parser->cmd[0], parser->operator);
-		// ne pas tolower quand c'est un infile ou outfile
-		parser->builtin = is_builtin(parser->cmd[0]);
-		free(parser->str);
-		parser = parser->next;
-	}
-	return (parser);
 }

@@ -6,7 +6,7 @@
 /*   By: walidnaiji <walidnaiji@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/15 10:56:39 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/09/23 16:49:02 by walidnaiji       ###   ########.fr       */
+/*   Updated: 2023/09/24 12:29:30 by walidnaiji       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,19 +29,27 @@ typedef enum
 
 typedef enum
 {
-	NO_IO,
+	NO_INPUT,
 	STDIN,
-	STDOUT,
 	IN_PIPE,
-	OUT_PIPE
-}		t_io;
+	IN_FILE,
+}		t_input;
+
+typedef enum
+{
+	NO_OUTPUT,
+	STDOUT,
+	OUT_PIPE,
+	OUT_FILE
+}		t_output
 
 typedef struct	s_parser
 {
 	char			*str;
 	char			**cmd;
 	t_builtin		builtin;
-	t_io			io;
+	t_input			input;
+	t_output		output;
 	t_operator		operator;
 	struct s_parser	*next;
 	struct s_parser	*prev;
@@ -57,10 +65,10 @@ void		init_parser(t_lexer *lexer);
 int			is_builtin(char *str);
 char		**split_args(char *str);
 char		*strtolower(char *str, int operator);
-t_parser	*init_node_parser(t_parser *parser);
 //init_node_parser.c
 void		init_node_infile(t_parser **parser, t_lexer **lexer, char **tmp);
 void		init_node_outfile(t_parser **parser, t_lexer **lexer, char **tmp);
+t_parser	*init_node_parser(t_parser *parser);
 
 //Management of linked lists:
 //init_list_parser.c

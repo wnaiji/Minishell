@@ -6,12 +6,19 @@
 /*   By: walidnaiji <walidnaiji@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/15 10:56:57 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/09/24 00:23:20 by walidnaiji       ###   ########.fr       */
+/*   Updated: 2023/09/24 12:35:18 by walidnaiji       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 /*
+-Dans les fonctions Infile et Outfile ne pas supprimer les maillons mais à la place
+	remplacer l'operator par CMD
+-Dans les foinctions Infile et Outfile ne stocker dans le parser seulement la str
+-Par la suite les NO_OPERATOR restant seront des commandes ou des builtins
+	- si elle est précédé d'un pipe il faudra mettre en IO IN_PIPE
+	- si elle est précédé d'un infile il faudra mettre en IO IN_FILE
+	- si elle est suivi d'un NO_OPERATOR
 -la fonction is_infile et is_outfile me semble correcte, commencer celui des cmd
 -Un nouvel enum est mis en place dans la structure de la liste chaîne du parser
 	elle determinera le stdin et le stdout lors de l'éxécution de la commande
@@ -80,30 +87,16 @@ t_parser	*is_cmd_or_builtin(t_lexer **lexer, t_parser *parser)
 
 	tmp = NULL;
 	if (!*lexer)
-		return (NULL);
-	while ((*lexer)->next)
+		return (parser);
+	while (*lexer)
 	{
 		parser = parser_add_back_list(parser, NULL);
-		if (parser->next)
-			parser = parser->next;
-		while ((*lexer)->next && (*lexer)->operator != PIPE)
+		if ((*lexer)->operator == NO_OPERATOR)
 		{
-			if (!parser->str)
-				parser->str = ft_strdup((*lexer)->str);
-			else
-			{
-				tmp = ft_strdup(parser->str);
-				free(parser->str);
-				parser->str = ft_strjoin(tmp, (*lexer)->str);
-			}
-			*lexer = delete_node(*lexer);
+			if ((*lexer)->prev)
 		}
-		parser->operator = CMD;
-		if ((*lexer)->next)
-			*lexer = delete_node(*lexer);
+		*lexer = (*lexer)->next;
 	}
-	if (parser_last_content(parser) == NULL)
-		parser = parser_delete_at_back(parser);
 	return (parser);
 }
 
@@ -127,7 +120,7 @@ void	init_parser(t_lexer *lexer)
 		while (lexer->prev)
 			lexer = lexer->prev;
 	}
-	//parser = is_cmd_or_builtin(&lexer, parser);
+	parser = is_cmd_or_builtin(&lexer, parser);
 	//if (parser)
 	//{				/*j'ai oublié pk j'ai fait cette boucle*/
 	//	while (parser->prev)

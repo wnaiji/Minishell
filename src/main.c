@@ -6,7 +6,7 @@
 /*   By: walidnaiji <walidnaiji@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 14:58:41 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/09/23 23:35:59 by walidnaiji       ###   ########.fr       */
+/*   Updated: 2023/09/24 10:51:48 by walidnaiji       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int	main(int argc, char **argv, char **envp)
 	{
 		input = prompt(input);
 		basic_parsing(input); //faire en sorte lors d'une erreur la fonction renvoie sur un prompt
-		init_parser(init_lexer(input));
+		init_parser(init_lexer(input)); //faire l'expender entre le lexer et le parser
 	}
 	if (argc > 1)
 		printf("Error: do not give an argument to the executable\n");

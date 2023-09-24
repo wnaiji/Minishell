@@ -6,7 +6,7 @@
 /*   By: walidnaiji <walidnaiji@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 14:45:06 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/09/23 23:39:10 by walidnaiji       ###   ########.fr       */
+/*   Updated: 2023/09/24 10:42:05 by walidnaiji       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,4 +58,20 @@ void	init_node_outfile(t_parser **parser, t_lexer **lexer, char **tmp)
 			|| (*lexer)->operator == OUTFILE_AP_MOD))
 			break ;
 	}
+}
+
+t_parser	*init_node_parser(t_parser *parser)
+{
+	if (!parser)
+		return (NULL);
+	while (parser->next)
+	{
+		parser->cmd = split_args(parser->str);
+		parser->cmd[0] = strtolower(parser->cmd[0], parser->operator);
+		// ne pas tolower quand c'est un infile ou outfile
+		parser->builtin = is_builtin(parser->cmd[0]);
+		free(parser->str);
+		parser = parser->next;
+	}
+	return (parser);
 }
