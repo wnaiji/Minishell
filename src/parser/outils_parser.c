@@ -6,7 +6,7 @@
 /*   By: walidnaiji <walidnaiji@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/15 10:57:16 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/09/24 10:42:41 by walidnaiji       ###   ########.fr       */
+/*   Updated: 2023/09/24 15:02:48 by walidnaiji       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,4 +53,14 @@ char	*strtolower(char *str, int operator)
 		i++;
 	}
 	return (str);
+}
+
+t_input	input()
+{
+
+}
+
+t_output	output()
+{
+	
 }

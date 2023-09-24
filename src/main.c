@@ -6,7 +6,7 @@
 /*   By: walidnaiji <walidnaiji@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 14:58:41 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/09/24 10:51:48 by walidnaiji       ###   ########.fr       */
+/*   Updated: 2023/09/24 15:17:15 by walidnaiji       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,9 @@ void	print_parser(t_parser *parser)
 		//}
 		printf("CONTENT:	#%s#\n", tmp->str);
 		printf("BUILTIN:	#%d#\n", tmp->builtin);
-		printf("REDIREC:	#%d#\n", tmp->operator);
+		printf("OPERATOR:	#%d#\n", tmp->operator);
+		printf("INPUT:		#%d#\n", tmp->input);
+		printf("OUTPUT:		#%d#\n", tmp->output);
 		tmp = tmp->next;
 	}
 }

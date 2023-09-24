@@ -6,7 +6,7 @@
 /*   By: walidnaiji <walidnaiji@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/15 10:56:39 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/09/24 12:29:30 by walidnaiji       ###   ########.fr       */
+/*   Updated: 2023/09/24 15:03:51 by walidnaiji       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ typedef enum
 	STDOUT,
 	OUT_PIPE,
 	OUT_FILE
-}		t_output
+}		t_output;
 
 typedef struct	s_parser
 {
@@ -65,15 +65,17 @@ void		init_parser(t_lexer *lexer);
 int			is_builtin(char *str);
 char		**split_args(char *str);
 char		*strtolower(char *str, int operator);
+t_input		input();
+t_output	output();
 //init_node_parser.c
-void		init_node_infile(t_parser **parser, t_lexer **lexer, char **tmp);
-void		init_node_outfile(t_parser **parser, t_lexer **lexer, char **tmp);
+void		init_node_infile(t_parser **parser, t_lexer **lexer);
+void		init_node_outfile(t_parser **parser, t_lexer **lexer);
 t_parser	*init_node_parser(t_parser *parser);
 
 //Management of linked lists:
 //init_list_parser.c
 void		*parser_add_back_list(t_parser *list, char *line);
-//void		*delete_node(t_lexer *list);
+void		*delete_node(t_lexer *list);
 void		*parser_delete_at_back(t_parser *list);
 char		*parser_last_content(t_parser *list);
 

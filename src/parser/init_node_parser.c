@@ -6,58 +6,36 @@
 /*   By: walidnaiji <walidnaiji@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 14:45:06 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/09/24 10:42:05 by walidnaiji       ###   ########.fr       */
+/*   Updated: 2023/09/24 14:43:27 by walidnaiji       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 
-void	init_node_infile(t_parser **parser, t_lexer **lexer, char **tmp)
+void	init_node_infile(t_parser **parser, t_lexer **lexer)
 {
+	*parser = parser_add_back_list(*parser, NULL);
+	(*parser)->str = ft_strdup((*lexer)->str);
+	(*parser)->operator = (*lexer)->operator;
+	(*parser)->builtin = NO_BUILTIN;
+	(*parser)->input = IN_FILE;
+	(*parser)->output = NO_OUTPUT;
+	*lexer = (*lexer)->next;
 	if (*lexer && ((*lexer)->operator == SPACE))
-		*lexer = delete_node(*lexer);
-	while (*lexer && ((*lexer)->operator == NO_OPERATOR
-		|| (*lexer)->operator == SPACE || (*lexer)->operator == INFILE
-		|| (*lexer)->operator == HEREDOC))
-	{
-		*tmp = ft_strjoin((*parser)->str, (*lexer)->str);
-		free((*parser)->str);
-		(*parser)->str = ft_strdup(*tmp);
-		free(*tmp);
-		*lexer = delete_node(*lexer);
-		if (*lexer && ((*lexer)->operator == SPACE))
-		{
-			*lexer = delete_node(*lexer);
-			break ;
-		}
-		else if (*lexer && ((*lexer)->operator == INFILE
-			|| (*lexer)->operator == HEREDOC))
-			break ;
-	}
+		*lexer = (*lexer)->next;
 }
 
-void	init_node_outfile(t_parser **parser, t_lexer **lexer, char **tmp)
+void	init_node_outfile(t_parser **parser, t_lexer **lexer)
 {
+	*parser = parser_add_back_list(*parser, NULL);
+	(*parser)->str = ft_strdup((*lexer)->str);
+	(*parser)->operator = (*lexer)->operator;
+	(*parser)->builtin = NO_BUILTIN;
+	(*parser)->output = OUT_FILE;
+	(*parser)->input = NO_INPUT;
+	*lexer = (*lexer)->next;
 	if (*lexer && ((*lexer)->operator == SPACE))
-		*lexer = delete_node(*lexer);
-	while (*lexer && ((*lexer)->operator == NO_OPERATOR
-		|| (*lexer)->operator == SPACE || (*lexer)->operator == OUTFILE
-		|| (*lexer)->operator == OUTFILE_AP_MOD))
-	{
-		*tmp = ft_strjoin((*parser)->str, (*lexer)->str);
-		free((*parser)->str);
-		(*parser)->str = ft_strdup(*tmp);
-		free(*tmp);
-		*lexer = delete_node(*lexer);
-		if (*lexer && ((*lexer)->operator == SPACE))
-		{
-			*lexer = delete_node(*lexer);
-			break ;
-		}
-		else if (*lexer && ((*lexer)->operator == OUTFILE
-			|| (*lexer)->operator == OUTFILE_AP_MOD))
-			break ;
-	}
+		*lexer = (*lexer)->next;
 }
 
 t_parser	*init_node_parser(t_parser *parser)
