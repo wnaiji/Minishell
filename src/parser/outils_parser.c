@@ -6,7 +6,7 @@
 /*   By: walidnaiji <walidnaiji@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/15 10:57:16 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/09/24 15:32:01 by walidnaiji       ###   ########.fr       */
+/*   Updated: 2023/09/25 16:48:57 by walidnaiji       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,13 +60,15 @@ t_input	input(t_lexer *lexer)
 	t_lexer	*tmp;
 
 	tmp = lexer;
+	if (tmp->prev)
+		tmp = tmp->prev;
 	while (tmp->prev)
 	{
-		tmp = tmp->prev;
 		if (tmp->operator == INFILE || tmp->operator == HEREDOC)
 			return (IN_FILE);
 		else if (tmp->operator == PIPE)
 			return (IN_PIPE);
+		tmp = tmp->prev;
 	}
 	return (STDIN);
 }
@@ -76,13 +78,15 @@ t_output	output(t_lexer *lexer)
 	t_lexer	*tmp;
 
 	tmp = lexer;
+	if (tmp)
+		tmp = tmp->next;
 	while (tmp)
 	{
-		tmp = tmp->next;
 		if (tmp->operator == OUTFILE || tmp->operator == OUTFILE_AP_MOD)
 			return (OUT_FILE);
 		else if (tmp->operator == PIPE)
 			return (OUT_PIPE);
+		tmp = tmp->next;
 	}
 	return (STDOUT);
 }

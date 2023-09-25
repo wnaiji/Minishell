@@ -6,7 +6,7 @@
 /*   By: walidnaiji <walidnaiji@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 14:45:06 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/09/24 15:44:33 by walidnaiji       ###   ########.fr       */
+/*   Updated: 2023/09/25 16:58:28 by walidnaiji       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,23 @@ void	init_node_outfile(t_parser **parser, t_lexer **lexer)
 
 void	init_node_cmd(t_parser **parser, t_lexer **lexer)
 {
-	*parser = parser_add_back_list(*parser, NULL);
-	(*parser)->str = ft_strdup((*lexer)->str); // mettre les éléments directement dans **cmd
+	char	*tmp;
+
+	tmp = NULL;
+	if (!(*parser)->str)
+		(*parser)->str = ft_strdup((*lexer)->str); // mettre les éléments directement dans **cmd
+	else
+	{
+		tmp = ft_strjoin((*parser)->str, (*lexer)->str);
+		free((*parser)->str);
+		(*parser)->str = ft_strdup(tmp);
+		free(tmp);
+	}
 	(*parser)->operator = CMD;
 	(*parser)->builtin = NO_BUILTIN;
 	(*parser)->input = input(*lexer);
 	(*parser)->output = output(*lexer);
+	*lexer = (*lexer)->next;
 }
 
 t_parser	*init_node_parser(t_parser *parser)
