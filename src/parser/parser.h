@@ -6,7 +6,7 @@
 /*   By: walidnaiji <walidnaiji@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/15 10:56:39 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/09/24 15:37:38 by walidnaiji       ###   ########.fr       */
+/*   Updated: 2023/09/28 21:30:38 by walidnaiji       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,8 @@ t_output	output(t_lexer *lexer);
 //init_node_parser.c
 void		init_node_infile(t_parser **parser, t_lexer **lexer);
 void		init_node_outfile(t_parser **parser, t_lexer **lexer);
-void		init_node_cmd(t_parser **parser, t_lexer **lexer);
+void		init_node_cmd(t_parser **parser, t_lexer **lexer,
+			unsigned int nb_arg, int i);
 t_parser	*init_node_parser(t_parser *parser);
 
 //Management of linked lists:

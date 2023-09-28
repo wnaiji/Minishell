@@ -6,7 +6,7 @@
 /*   By: walidnaiji <walidnaiji@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/15 10:56:57 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/09/26 00:11:31 by walidnaiji       ###   ########.fr       */
+/*   Updated: 2023/09/28 21:32:18 by walidnaiji       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,19 +74,45 @@ t_parser	*is_outfile(t_lexer **lexer, t_parser *parser)
 	return (parser);
 }
 
+unsigned int	nbr_arg_cmd(unsigned int nb_arg, t_lexer *lexer)
+{
+	while (lexer && lexer->operator == NO_OPERATOR)
+	{
+		lexer = lexer->next;
+		if (lexer && lexer->operator == SPACE
+			&& lexer->next->operator == NO_OPERATOR)
+		{
+			nb_arg++;;
+			lexer = lexer->next;
+		}
+	}
+	return (nb_arg);
+}
+
 t_parser	*is_cmd_or_builtin(t_lexer **lexer, t_parser *parser)
 {
+	unsigned int	nb_arg;
+	int				index;
+
 	while (*lexer)
 	{
+		nb_arg = 1;
 		if ((*lexer)->operator == NO_OPERATOR)
 		{
 			parser = parser_add_back_list(parser, NULL);
+			index = -1;
+			nb_arg = nbr_arg_cmd(nb_arg, *lexer);
 			while (*lexer && (*lexer)->operator == NO_OPERATOR)
 			{
-				init_node_cmd(&parser, &*lexer);
+				init_node_cmd(&parser, &*lexer, nb_arg, ++index);
 				if (*lexer && (*lexer)->operator == SPACE
 					&& (*lexer)->next->operator == NO_OPERATOR)
-					init_node_cmd(&parser, &*lexer);
+				{
+					*lexer = (*lexer)->next;
+					init_node_cmd(&parser, &*lexer, nb_arg, ++index);
+					if (*lexer && (*lexer)->operator == SPACE)
+						*lexer = (*lexer)->next;
+				}
 			}
 		}
 		else
@@ -111,6 +137,6 @@ void	init_parser(t_lexer *lexer)
 	parser = is_cmd_or_builtin(&lexer, parser);
 	lexer = first_node;
 	//parser = init_node_parser(parser);
-	print_lexer(lexer);
+	//print_lexer(lexer);
 	print_parser(parser);
 }

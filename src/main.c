@@ -6,7 +6,7 @@
 /*   By: walidnaiji <walidnaiji@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 14:58:41 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/09/24 15:17:15 by walidnaiji       ###   ########.fr       */
+/*   Updated: 2023/09/28 20:12:45 by walidnaiji       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,21 +39,25 @@ void	print_parser(t_parser *parser)
 	if (!parser)
 		return ;
 	t_parser	*tmp;
-	//int			i;
+	int			i;
 
 	while (parser->prev)
 		parser = parser->prev;
 	tmp = parser;
-	//i = 0;
+	i = 0;
 	while (tmp)
 	{
 		printf("#####PARSER#####\n");
-		//while (parser->cmd[i])
-		//{
-		//	printf("CMD:		#%s#\n", parser->cmd[i]);
-		//	i++;
-		//}
-		printf("CONTENT:	#%s#\n", tmp->str);
+		if (parser->cmd)
+		{
+			while (parser->cmd[i])
+			{
+				printf("CMD:		#%s#\n", parser->cmd[i]);
+				i++;
+			}
+		}
+		else
+			printf("CONTENT:	#%s#\n", tmp->str);
 		printf("BUILTIN:	#%d#\n", tmp->builtin);
 		printf("OPERATOR:	#%d#\n", tmp->operator);
 		printf("INPUT:		#%d#\n", tmp->input);

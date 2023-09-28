@@ -6,7 +6,7 @@
 /*   By: walidnaiji <walidnaiji@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 14:45:06 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/09/25 16:58:28 by walidnaiji       ###   ########.fr       */
+/*   Updated: 2023/09/28 21:35:36 by walidnaiji       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	init_node_infile(t_parser **parser, t_lexer **lexer)
 {
 	*parser = parser_add_back_list(*parser, NULL);
 	(*parser)->str = ft_strdup((*lexer)->str);
+	(*parser)->cmd = NULL;
 	(*parser)->operator = (*lexer)->operator;
 	(*parser)->builtin = NO_BUILTIN;
 	(*parser)->input = IN_FILE;
@@ -29,6 +30,7 @@ void	init_node_outfile(t_parser **parser, t_lexer **lexer)
 {
 	*parser = parser_add_back_list(*parser, NULL);
 	(*parser)->str = ft_strdup((*lexer)->str);
+	(*parser)->cmd = NULL;
 	(*parser)->operator = (*lexer)->operator;
 	(*parser)->builtin = NO_BUILTIN;
 	(*parser)->output = OUT_FILE;
@@ -38,20 +40,27 @@ void	init_node_outfile(t_parser **parser, t_lexer **lexer)
 		*lexer = (*lexer)->next;
 }
 
-void	init_node_cmd(t_parser **parser, t_lexer **lexer)
+void	init_node_cmd(t_parser **parser, t_lexer **lexer,
+		unsigned int nb_arg, int	i)
 {
-	char	*tmp;
+	char		*tmp;
 
-	tmp = NULL;
-	if (!(*parser)->str)
-		(*parser)->str = ft_strdup((*lexer)->str); // mettre les éléments directement dans **cmd
-	else
+	if (!(*parser)->cmd)
 	{
-		tmp = ft_strjoin((*parser)->str, (*lexer)->str);
-		free((*parser)->str);
-		(*parser)->str = ft_strdup(tmp);
-		free(tmp);
+		(*parser)->cmd = malloc(sizeof(char *) * (nb_arg + 5));
+		if (!(*parser)->cmd)
+			return ;
 	}
+	(*parser)->cmd[i] = ft_strdup((*lexer)->str);
+	while ((*lexer)->next && (*lexer)->next->operator == NO_OPERATOR)
+	{
+		tmp = ft_strjoin((*parser)->cmd[i], (*lexer)->str);
+		free((*parser)->cmd[i]);
+		(*parser)->cmd[i] = ft_strdup(tmp);
+		free(tmp);
+		*lexer = (*lexer)->next;
+	}
+	(*parser)->cmd[i + 1] = NULL;
 	(*parser)->operator = CMD;
 	(*parser)->builtin = NO_BUILTIN;
 	(*parser)->input = input(*lexer);

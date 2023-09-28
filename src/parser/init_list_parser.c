@@ -6,7 +6,7 @@
 /*   By: walidnaiji <walidnaiji@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/15 13:44:02 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/09/23 15:21:29 by walidnaiji       ###   ########.fr       */
+/*   Updated: 2023/09/28 20:25:20 by walidnaiji       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	*parser_add_back_list(t_parser *parser, char *str)
 	if (!newnode)
 		return (NULL);
 	newnode->str = str;
+	newnode->cmd = NULL;
 	newnode->prev = NULL;
 	newnode->next = NULL;
 	if (!parser)
