@@ -6,7 +6,7 @@
 /*   By: walidnaiji <walidnaiji@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 14:45:06 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/09/28 21:35:36 by walidnaiji       ###   ########.fr       */
+/*   Updated: 2023/10/11 15:53:05 by walidnaiji       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,15 +44,20 @@ void	init_node_cmd(t_parser **parser, t_lexer **lexer,
 		unsigned int nb_arg, int	i)
 {
 	char		*tmp;
-
 	if (!(*parser)->cmd)
 	{
-		(*parser)->cmd = malloc(sizeof(char *) * (nb_arg + 5));
+		(*parser)->cmd = malloc(sizeof(char *) * (nb_arg + 1));
 		if (!(*parser)->cmd)
 			return ;
 	}
+	(*parser)->cmd[i + 1] = NULL;
+	(*parser)->operator = CMD;
+	(*parser)->builtin = NO_BUILTIN;
+	(*parser)->input = input(*lexer);
+	(*parser)->output = output(*lexer);
 	(*parser)->cmd[i] = ft_strdup((*lexer)->str);
-	while ((*lexer)->next && (*lexer)->next->operator == NO_OPERATOR)
+	*lexer = (*lexer)->next;
+	while (*lexer && (*lexer)->operator == NO_OPERATOR)
 	{
 		tmp = ft_strjoin((*parser)->cmd[i], (*lexer)->str);
 		free((*parser)->cmd[i]);
@@ -60,12 +65,6 @@ void	init_node_cmd(t_parser **parser, t_lexer **lexer,
 		free(tmp);
 		*lexer = (*lexer)->next;
 	}
-	(*parser)->cmd[i + 1] = NULL;
-	(*parser)->operator = CMD;
-	(*parser)->builtin = NO_BUILTIN;
-	(*parser)->input = input(*lexer);
-	(*parser)->output = output(*lexer);
-	*lexer = (*lexer)->next;
 }
 
 t_parser	*init_node_parser(t_parser *parser)

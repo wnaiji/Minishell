@@ -6,15 +6,15 @@
 /*   By: walidnaiji <walidnaiji@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/15 10:56:57 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/09/28 21:32:18 by walidnaiji       ###   ########.fr       */
+/*   Updated: 2023/10/11 16:40:36 by walidnaiji       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 /*
--pour pouvoir différencier un SPACE de " " il faudra split les args cmds
-	dés le début et non par la suite car une fois les arguments concaténé
-	on ne poura plus faire la différence entre un SPACE et " "
+-la lecture des cmds n'est pas bon, la gestion des quote et les suites
+	de commandes avec des infile ou outfile fait passser les commandes
+	en NULL vérifier la fonction cmd_or_builtin et init_node_cmd
 -split les cmds puis vérifier le premier str du tableau via strlower
 	si c'est un builtin
 -une fois que la liste et construite, que la vérification des enum
@@ -100,16 +100,17 @@ t_parser	*is_cmd_or_builtin(t_lexer **lexer, t_parser *parser)
 		if ((*lexer)->operator == NO_OPERATOR)
 		{
 			parser = parser_add_back_list(parser, NULL);
-			index = -1;
+			index = 0;
 			nb_arg = nbr_arg_cmd(nb_arg, *lexer);
 			while (*lexer && (*lexer)->operator == NO_OPERATOR)
 			{
-				init_node_cmd(&parser, &*lexer, nb_arg, ++index);
+				printf("je suis ici\n");
+				init_node_cmd(&parser, &*lexer, nb_arg, index++);
 				if (*lexer && (*lexer)->operator == SPACE
 					&& (*lexer)->next->operator == NO_OPERATOR)
 				{
 					*lexer = (*lexer)->next;
-					init_node_cmd(&parser, &*lexer, nb_arg, ++index);
+					init_node_cmd(&parser, &*lexer, nb_arg, index++);
 					if (*lexer && (*lexer)->operator == SPACE)
 						*lexer = (*lexer)->next;
 				}
@@ -118,6 +119,7 @@ t_parser	*is_cmd_or_builtin(t_lexer **lexer, t_parser *parser)
 		else
 			*lexer = (*lexer)->next;
 	}
+	printf("------------%s\n", (parser)->cmd[0]);
 	return (parser);
 }
 
@@ -137,6 +139,6 @@ void	init_parser(t_lexer *lexer)
 	parser = is_cmd_or_builtin(&lexer, parser);
 	lexer = first_node;
 	//parser = init_node_parser(parser);
-	//print_lexer(lexer);
+	print_lexer(lexer);
 	print_parser(parser);
 }
