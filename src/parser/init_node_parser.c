@@ -6,7 +6,7 @@
 /*   By: walidnaiji <walidnaiji@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 14:45:06 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/10/11 15:53:05 by walidnaiji       ###   ########.fr       */
+/*   Updated: 2023/10/13 16:08:06 by walidnaiji       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,10 @@ void	init_node_outfile(t_parser **parser, t_lexer **lexer)
 }
 
 void	init_node_cmd(t_parser **parser, t_lexer **lexer,
-		unsigned int nb_arg, int	i)
+			unsigned int nb_arg, int i)
 {
 	char		*tmp;
+
 	if (!(*parser)->cmd)
 	{
 		(*parser)->cmd = malloc(sizeof(char *) * (nb_arg + 1));
@@ -67,18 +68,28 @@ void	init_node_cmd(t_parser **parser, t_lexer **lexer,
 	}
 }
 
-t_parser	*init_node_parser(t_parser *parser)
+unsigned int	nbr_arg_cmd(unsigned int nb_arg, t_lexer *lexer)
 {
-	if (!parser)
-		return (NULL);
-	while (parser->next)
+	while (lexer && lexer->operator == NO_OPERATOR)
 	{
-		parser->cmd = split_args(parser->str);
-		parser->cmd[0] = strtolower(parser->cmd[0], parser->operator);
-		// ne pas tolower quand c'est un infile ou outfile
-		parser->builtin = is_builtin(parser->cmd[0]);
-		free(parser->str);
-		parser = parser->next;
+		lexer = lexer->next;
+		if (lexer && lexer->operator == SPACE
+			&& lexer->next->operator == NO_OPERATOR)
+		{
+			nb_arg++;
+			lexer = lexer->next;
+		}
 	}
+	return (nb_arg);
+}
+
+t_parser	*init_node_builtin(t_parser *parser)
+{
+	char	*tmp_cmd;
+
+	tmp_cmd = ft_strdup(parser->cmd[0]);
+	tmp_cmd = strtolower(tmp_cmd);
+	parser->builtin = token_builtin(tmp_cmd);
+	free(tmp_cmd);
 	return (parser);
 }

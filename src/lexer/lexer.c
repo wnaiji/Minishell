@@ -6,7 +6,7 @@
 /*   By: walidnaiji <walidnaiji@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 16:30:39 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/09/23 12:19:10 by walidnaiji       ###   ########.fr       */
+/*   Updated: 2023/10/13 15:57:42 by walidnaiji       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,12 @@ t_lexer	*operator(t_lexer *lexer, char *input, int *i)
 	return (lexer);
 }
 
-t_lexer	*is_cmd(t_lexer *lexer, char *input, int *i)
+t_lexer	*token_cmd(t_lexer *lexer, char *input, int *i)
 {
 	if (special_char(input[*i]) == 0 && input[*i] != DOUBLE_QUOTE
 		&& input[*i] != SIMPLE_QUOTE)
 		lexer->str = chardup(input[(*i)++]);
-	while(input[*i] && special_char(input[*i]) == 0
+	while (input[*i] && special_char(input[*i]) == 0
 		&& input[*i] != DOUBLE_QUOTE && input[*i] != SIMPLE_QUOTE
 		&& input[*i] != ' ')
 	{

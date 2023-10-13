@@ -6,7 +6,7 @@
 /*   By: walidnaiji <walidnaiji@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 14:55:25 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/09/22 23:26:03 by walidnaiji       ###   ########.fr       */
+/*   Updated: 2023/10/13 15:59:32 by walidnaiji       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # define POINT_VIRGULE 59
 # define PIPELINE 124
 
-typedef enum
+typedef enum e_operator
 {
 	NO_OPERATOR,
 	PIPE,
@@ -34,14 +34,14 @@ typedef enum
 	CMD
 }		t_operator;
 
-typedef enum
+typedef enum e_quoted
 {
 	NO_QUOTED,
 	SIMPLE_QUOTED,
 	DOUBLE_QUOTED
 }		t_quoted;
 
-typedef struct	s_lexer
+typedef struct s_lexer
 {
 	char			*str;
 	t_operator		operator;
@@ -70,7 +70,7 @@ t_lexer		*double_quote(t_lexer *lexer, char *input, int *i);
 t_lexer		*no_quote(t_lexer *lexer, char *input, int *i);
 //lexer.c
 t_lexer		*operator(t_lexer *lexer, char *input, int *i);
-t_lexer		*is_cmd(t_lexer *lexer, char *input, int *i);
+t_lexer		*token_cmd(t_lexer *lexer, char *input, int *i);
 t_lexer		*space(t_lexer *lexer, char *input, int *i);
 t_lexer		*final_check_lexer(t_lexer *lexer);
 t_lexer		*init_lexer(char *input);

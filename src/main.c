@@ -6,7 +6,7 @@
 /*   By: walidnaiji <walidnaiji@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 14:58:41 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/10/11 16:57:03 by walidnaiji       ###   ########.fr       */
+/*   Updated: 2023/10/13 16:22:52 by walidnaiji       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ char	*prompt(char *input)
 	if (!input)
 	{
 		printf("exit\n");
+		system("leaks minishell");
 		exit(EXIT_SUCCESS);
 	}
 	if (input[0] != '\0')
@@ -92,6 +93,7 @@ int	main(int argc, char **argv, char **envp)
 		input = prompt(input);
 		basic_parsing(input); //faire en sorte lors d'une erreur la fonction renvoie sur un prompt
 		init_parser(init_lexer(input)); //faire l'expender entre le lexer et le parser
+		// free le lexer
 	}
 	if (argc > 1)
 		printf("Error: do not give an argument to the executable\n");
