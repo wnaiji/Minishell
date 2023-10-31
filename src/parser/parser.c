@@ -6,24 +6,15 @@
 /*   By: walidnaiji <walidnaiji@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/15 10:56:57 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/10/31 19:04:21 by walidnaiji       ###   ########.fr       */
+/*   Updated: 2023/10/31 20:03:40 by walidnaiji       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 
-/*Il faut reprendre entièrement le parser, c'est à dire qu'il faudra donc:
-- Dans la boucle principale tant que lexer éxiste
-- chaque tour corespondra à la création d'un maillon de la liste chaîné
-	parser, il sera donc composé d'un ou plusieurs infile, d'un
-	ou plusieurs outfile ainsi que de la commande. le tout sera dans
-	un tableau de tableau (pour chaque information). si il n'y à rien
-	un NULL sera initialisé
-- il sera aussi composé de plusieurs token input, output, builtin
-	il faudra éventuellement laisser des instructions pour l'expender
-	pour qu'il puisse faire la diférence au moment ou elle est entre simple quote ou pas
-- il faudra qu'au moment de chaque maillon les infile puis les outfiles
-	sois supprimé au fur est à mesure pour ne laisser que la commande et s'est argument*/
+/*Revoir les fonction une à une sur plusieur possibilité de prompt
+	j'en suis au niveau de la fonction is_infile une erreur au niveau de la ligne
+	54. Utilisé les modifications apporté dans le is infile au is outfile*/
 
 t_parser	*is_infile(t_lexer **lexer, t_parser *parser)
 {
@@ -48,8 +39,9 @@ t_parser	*is_infile(t_lexer **lexer, t_parser *parser)
 	{
 		if ((*lexer)->operator == INFILE || (*lexer)->operator == HEREDOC)
 		{
+			*lexer = delete_node(*lexer);
 			parser->infile[i] = ft_strdup((*lexer)->str);
-			lexer = delete_node(*lexer);
+			*lexer = delete_node(*lexer);
 			while (*lexer && (*lexer)->operator == NO_OPERATOR)
 			{
 				tmp = ft_strjoin(parser->infile[i], (*lexer)->str);
@@ -91,8 +83,8 @@ t_parser	*is_outfile(t_lexer **lexer, t_parser *parser)
 		if ((*lexer)->operator == OUTFILE
 			|| (*lexer)->operator == OUTFILE_AP_MOD)
 		{
+			*lexer = delete_node(*lexer);
 			parser->outfile[i] = ft_strdup((*lexer)->str);
-			lexer = delete_node(*lexer);
 			while (*lexer && (*lexer)->operator == NO_OPERATOR)
 			{
 				tmp = ft_strjoin(parser->outfile[i], (*lexer)->str);
@@ -169,7 +161,7 @@ void	init_parser(t_lexer *lexer)
 	index = 0;
 	while (lexer)
 	{
-		parser_add_back_list(parser, NULL);
+		parser = parser_add_back_list(parser, NULL);
 		while (parser && parser->next)
 			parser = parser->next;
 		parser = is_infile(&lexer, parser);
@@ -181,7 +173,7 @@ void	init_parser(t_lexer *lexer)
 			while (lexer->prev)
 				lexer = lexer->prev;
 		parser = is_cmd(&lexer, parser, nb_arg, index);
-		//cmd
+		//builtin
 		//lexer = lexer->next; le lexer est supprimé
 		//au fur est à mesure nous avons donc pas besoin d passer au suivant
 		print_lexer(lexer);

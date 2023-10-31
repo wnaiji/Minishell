@@ -6,7 +6,7 @@
 /*   By: walidnaiji <walidnaiji@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 14:45:06 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/10/31 18:54:50 by walidnaiji       ###   ########.fr       */
+/*   Updated: 2023/10/31 19:17:58 by walidnaiji       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	init_node_cmd(t_parser **parser, t_lexer **lexer,
 {
 	char		*tmp;
 
-	if ((*parser)->cmd)
+	if (!(*parser)->cmd)
 	{
 		(*parser)->cmd = malloc(sizeof(char *) * (nb_arg + 1));
 		if (!(*parser)->cmd)

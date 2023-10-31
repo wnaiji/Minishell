@@ -6,7 +6,7 @@
 /*   By: walidnaiji <walidnaiji@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 14:55:25 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/10/13 15:59:32 by walidnaiji       ###   ########.fr       */
+/*   Updated: 2023/10/31 19:33:48 by walidnaiji       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ t_lexer		*init_lexer(char *input);
 //Management of linked lists:
 //init_list_lexer.c
 void		*lexer_add_back_list(t_lexer *list, char *line);
-void		*delete_node(t_lexer *lexer);
 
 //////////PRINT_ERROR//////////
 //print_error.c

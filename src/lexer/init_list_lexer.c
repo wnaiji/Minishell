@@ -6,7 +6,7 @@
 /*   By: walidnaiji <walidnaiji@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 11:20:30 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/09/22 23:24:48 by walidnaiji       ###   ########.fr       */
+/*   Updated: 2023/10/31 19:33:30 by walidnaiji       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,29 +34,4 @@ void	*lexer_add_back_list(t_lexer *list, char *line)
 		newline->prev = tmp;
 		return (list);
 	}
-}
-
-void	*delete_node(t_lexer *lexer)
-{
-	void	*pointer;
-
-	pointer = NULL;
-	if (lexer->prev && lexer->next)
-	{
-		pointer = lexer->next;
-		lexer->prev->next = lexer->next;
-		lexer->next->prev = lexer->prev;
-	}
-	else if (!lexer->prev && lexer->next)
-	{
-		pointer = lexer->next;
-		lexer->next->prev = NULL;
-	}
-	else if (lexer->prev && !lexer->next)
-	{
-		pointer = lexer->prev;
-		lexer->prev->next = NULL;
-	}
-	free(lexer);
-	return (pointer);
 }
