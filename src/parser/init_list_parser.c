@@ -6,13 +6,13 @@
 /*   By: walidnaiji <walidnaiji@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/15 13:44:02 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/10/13 15:59:54 by walidnaiji       ###   ########.fr       */
+/*   Updated: 2023/10/31 18:58:29 by walidnaiji       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 
-void	*parser_add_back_list(t_parser *parser, char *str)
+void	*parser_add_back_list(t_parser *parser, char **str)
 {
 	t_parser	*newnode;
 	t_parser	*tmp;
@@ -21,7 +21,8 @@ void	*parser_add_back_list(t_parser *parser, char *str)
 	newnode = malloc(sizeof(t_parser));
 	if (!newnode)
 		return (NULL);
-	newnode->str = str;
+	newnode->infile = str;
+	newnode->outfile = NULL;
 	newnode->cmd = NULL;
 	newnode->prev = NULL;
 	newnode->next = NULL;
@@ -33,7 +34,7 @@ void	*parser_add_back_list(t_parser *parser, char *str)
 			tmp = tmp->next;
 		tmp->next = newnode;
 		newnode->prev = tmp;
-		return (newnode);
+		return (parser);
 	}
 }
 
@@ -57,16 +58,4 @@ void	*parser_delete_at_back(t_parser *parser)
 		parser = parser->prev;
 	free(tmp);
 	return (parser);
-}
-
-char	*parser_last_content(t_parser *parser)
-{
-	t_parser	*tmp;
-
-	tmp = parser;
-	if (!parser)
-		return (0);
-	while (tmp->next)
-		tmp = tmp->next;
-	return (tmp->str);
 }

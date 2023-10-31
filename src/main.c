@@ -6,7 +6,7 @@
 /*   By: walidnaiji <walidnaiji@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 14:58:41 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/10/13 16:22:52 by walidnaiji       ###   ########.fr       */
+/*   Updated: 2023/10/31 17:23:56 by walidnaiji       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,25 @@ void	print_parser(t_parser *parser)
 				i++;
 			}
 		}
-		printf("CONTENT:	#%s#\n", tmp->str);
-		printf("BUILTIN:	#%d#\n", tmp->builtin);
-		printf("OPERATOR:	#%d#\n", tmp->operator);
-		printf("INPUT:		#%d#\n", tmp->input);
-		printf("OUTPUT:		#%d#\n", tmp->output);
+		i = 0;
+		if (tmp->infile)
+		{
+			while (tmp->infile[i])
+			{
+				printf("INF:		#%s#\n", tmp->infile[i]);
+				i++;
+			}
+		}
+		i = 0;
+		if (tmp->outfile)
+		{
+			while (tmp->outfile[i])
+			{
+				printf("OUT:		#%s#\n", tmp->outfile[i]);
+				i++;
+			}
+		}
+		//printf("BUILTIN:	#%d#\n", tmp->builtin);
 		tmp = tmp->next;
 	}
 }
