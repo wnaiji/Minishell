@@ -6,7 +6,7 @@
 #    By: walidnaiji <walidnaiji@student.42.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/11 11:42:09 by wnaiji            #+#    #+#              #
-#    Updated: 2023/09/23 16:55:52 by walidnaiji       ###   ########.fr        #
+#    Updated: 2023/11/09 17:13:32 by walidnaiji       ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,10 @@ SRC_LEXER = $(addprefix $(LEXER_PATH),	basic_parsing.c \
 										lexer.c \
 										lexer_management_quoted.c)
 
+EXPANDER_PATH = $(SRC_PATH)expander/
+SRC_EXPANDER = $(addprefix $(EXPANDER_PATH),	expander.c \
+												outils_expander.c)
+
 PARSER_PATH = $(SRC_PATH)parser/
 SRC_PARSER = $(addprefix $(PARSER_PATH),	parser.c \
 											outils_parser.c \
@@ -30,7 +34,8 @@ SRC_PARSER = $(addprefix $(PARSER_PATH),	parser.c \
 
 SRC =	$(SRC_MAIN) \
 		$(SRC_LEXER) \
-		$(SRC_PARSER)
+		$(SRC_PARSER) \
+		$(SRC_EXPANDER)
 
 OBJ_DIR = obj
 OBJS = $(patsubst $(SRC_PATH)%.c, $(OBJ_DIR)/%.o, $(SRC))
