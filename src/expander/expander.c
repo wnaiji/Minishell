@@ -6,7 +6,7 @@
 /*   By: walidnaiji <walidnaiji@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 14:29:39 by wnaiji            #+#    #+#             */
-/*   Updated: 2023/11/09 17:08:39 by walidnaiji       ###   ########.fr       */
+/*   Updated: 2023/11/12 14:14:35 by walidnaiji       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,5 +51,7 @@ char	*expander(char *str)
 	if (!new)
 	{
 		/*modifier la valeur de expand*/
+		/*voir pour faire l'expander de la même manière que pour printf*/
+		/*si lexpander rend une str vide, retourner directement sur le prompt*/
 	}
 }
